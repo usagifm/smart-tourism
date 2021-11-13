@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\Operator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+
+class OperatorLoginController extends Controller
+{
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $operator = Operator::where('email', $request->email)->first();
+
+        if (! $operator || ! Hash::check($request->password, $operator->password)) {
+            // throw ValidationException::withMessages([
+            //     'email' => ['The provided credentials are incorrect.'],
+            // ]);
+            return response()->json(array(
+                'code'      =>  401,
+                'message'   =>  "The provided credentials are incorrect."
+            ), 401);
+        }
+
+        $total = $operator->tokens()->count();
+
+        if($total >= 1){
+            return response()->json(array(
+                'code'      =>  401,
+                'message'   =>  "Can only login in one device! "
+            ), 401);
+
+        }
+
+        $token = $operator->createToken('op_token')->plainTextToken;
+
+        return response()->json([
+                   'access_token' => $token,
+                   'token_type' => 'Bearer',
+                   'total' => $total
+        ]);
+    }
+
+    public function logout(Request $request){
+
+        return $request->operator()->currentAccessToken()->delete();
+    }
+
+}
