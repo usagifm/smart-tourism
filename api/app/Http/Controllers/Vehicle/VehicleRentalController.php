@@ -14,13 +14,36 @@ class VehicleRentalController extends Controller
     public function getStatus($id){
         $ongoing = false;
         $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
+
         if($checkIfOngoing){
             $ongoing = true;
         };
 
+        return response()->json(array(
+                "ongoing" => $ongoing,
+        ));
+
+    }
+
+
+    public function getStatusWithGmaps($id){
+        $ongoing = false;
+        $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
+
+        if($checkIfOngoing){
+            $ongoing = true;
+        };
+
+        $response = (new \GoogleMaps\GoogleMaps)->load('directions')
+        ->setParam([
+            'origin'          => 'place_id:ChIJu9xDDV3FQC4RUyVsXFijGR8',
+            'destination'     => 'place_id:ChIJcdsEK6zEQC4RSUoTGNyoLRE',
+        ])
+       ->isLocationOnEdge(-5.360273551463675, 105.31016811262346, 500);
 
         return response()->json(array(
                 "ongoing" => $ongoing,
+                "diluar_batas" => $response,
         ));
 
     }
@@ -32,8 +55,6 @@ class VehicleRentalController extends Controller
         $track->lat     =  $request->lat;
         $track->long     =  $request->long;
         $track->save();
-
-
         return response()->json(array(
                 "message" => "Data saved ! ",
         ));
@@ -47,7 +68,7 @@ class VehicleRentalController extends Controller
                 'origin'          => 'place_id:ChIJu9xDDV3FQC4RUyVsXFijGR8',
                 'destination'     => 'place_id:ChIJcdsEK6zEQC4RSUoTGNyoLRE',
             ])
-           ->isLocationOnEdge(-5.360273551463675, 105.31016811262346, 400);
+           ->isLocationOnEdge(-5.360273551463675, 105.31016811262346, 500);
 
 
     return response()->json(array(
