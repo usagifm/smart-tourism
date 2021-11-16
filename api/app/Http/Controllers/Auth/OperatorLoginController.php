@@ -49,7 +49,7 @@ class OperatorLoginController extends Controller
 
     public function logout(Request $request){
 
-        return $request->operator()->currentAccessToken()->delete();
+        return $request->user()->currentAccessToken()->delete();
     }
 
 }

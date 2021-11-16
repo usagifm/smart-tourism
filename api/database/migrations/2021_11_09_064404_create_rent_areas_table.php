@@ -16,7 +16,6 @@ class CreateRentAreasTable extends Migration
         Schema::create('rent_areas', function (Blueprint $table) {
             $table->id();
             $table->string('operational_hour');
-            $table->decimal('area');
             $table->timestamps();
         });
     }

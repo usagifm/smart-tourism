@@ -15,6 +15,9 @@ class AddDescriptionInRentAreas extends Migration
     {
         Schema::table('rent_areas', function (Blueprint $table) {
             $table->string('name')->after('id');
+            $table->string('origin');
+            $table->string('destination');
+            $table->integer('tolerance');
         });
     }
 

@@ -15,8 +15,8 @@ class CreateVehicleTypesTable extends Migration
     {
         Schema::create('vehicle_types', function (Blueprint $table) {
             $table->id();
-            $table->string('brand');
             $table->string('type');
+            $table->string('description');
             $table->timestamps();
         });
     }

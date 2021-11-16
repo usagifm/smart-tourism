@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Operator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 
-class OperatorLoginController extends Controller
+class AdminLoginController extends Controller
 {
     public function login(Request $request) {
         $request->validate([
@@ -16,9 +17,9 @@ class OperatorLoginController extends Controller
             'password' => 'required',
         ]);
 
-        $operator = Operator::where('email', $request->email)->first();
+        $admin = Admin::where('email', $request->email)->first();
 
-        if (! $operator || ! Hash::check($request->password, $operator->password)) {
+        if (! $admin || ! Hash::check($request->password, $admin->password)) {
             // throw ValidationException::withMessages([
             //     'email' => ['The provided credentials are incorrect.'],
             // ]);
@@ -38,7 +39,7 @@ class OperatorLoginController extends Controller
 
         // }
 
-        $token = $operator->createToken('admin_token')->plainTextToken;
+        $token = $admin->createToken('admin_token')->plainTextToken;
 
         return response()->json([
                    'access_token' => $token,
@@ -49,7 +50,7 @@ class OperatorLoginController extends Controller
 
     public function logout(Request $request){
 
-        return $request->operator()->currentAccessToken()->delete();
+        return $request->user()->currentAccessToken()->delete();
     }
 
 }

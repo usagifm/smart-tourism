@@ -22,5 +22,28 @@ class Vehicle extends Model
     public function ongoingRental() {
         return $this->hasMany(Rental::class, 'vehicle_id')->where("status", "ongoing" );
     }
+
+
+    public function vehiclePosition() {
+        return $this->hasOne(VehicleTrackHistory::class, 'vehicle_id')->latest('created_at');
+    }
+
+
+
+
+
+    protected $fillable = [
+        'label',
+        'vehicle_type_id',
+        'serial_number',
+        'fare',
+        'is_available',
+        'description',
+        'is_inside',
+        'rent_area_id',
+        'brand'
+    ];
+
+
 }
 

@@ -12,6 +12,29 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+
+    public function waiting_rental() {
+        return $this->hasMany(Rental::class, 'user_id')->where("status", "waiting");
+    }
+
+    public function ongoing_rental() {
+        return $this->hasMany(Rental::class, 'user_id')->where("status", "ongoing");
+    }
+
+
+    public function ended_rental() {
+        return $this->hasMany(Rental::class, 'user_id')->where("status", "ended");
+    }
+
+    public function paid_rental() {
+        return $this->hasMany(Rental::class, 'user_id')->where("status", "paid");
+    }
+
+
+
+
+
     /**
      * The attributes that are mass assignable.
      *

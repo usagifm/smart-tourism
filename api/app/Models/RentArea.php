@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class RentArea extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        'name',
+        'operational_hour',
+        'origin',
+        'destination',
+        'tolerance'
+    ];
+
+
 }

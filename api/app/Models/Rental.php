@@ -22,5 +22,4 @@ class Rental extends Model
         return $this->hasOne(invoice::class, 'rental_id')->withDefault();
     }
 
-
 }

@@ -21,7 +21,9 @@ class CreateVehiclesTable extends Migration
             $table->integer('fare');
             $table->boolean('is_available');
             $table->string('description');
+            $table->string('is_inside');
             $table->integer('rent_area_id');
+            $table->string('brand');
             $table->timestamps();
         });
     }
