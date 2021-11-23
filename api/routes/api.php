@@ -143,8 +143,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => 'vehicle'], function () {
 
-        Route::get('/send/{id}', [VehicleRentalController::class, 'getStatus']);
-        Route::get('/gmaps', [VehicleRentalController::class, 'googleMaps']);
+        Route::get('/status-test/{id}', [VehicleRentalController::class, 'getStatus']);
+        Route::get('/status-gmaps/{id}', [VehicleRentalController::class, 'getStatusWithGmaps']);
+        Route::get('/send-status/{id}', [VehicleRentalController::class, 'sendTrackHistory']);
 
 });
 

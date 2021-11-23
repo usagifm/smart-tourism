@@ -12,11 +12,11 @@ class VehicleRentalController extends Controller
 {
 
     public function getStatus($id){
-        $ongoing = false;
+        $ongoing = 0;
         $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
 
         if($checkIfOngoing){
-            $ongoing = true;
+            $ongoing = 1;
         };
 
         return response()->json(array(
@@ -27,12 +27,14 @@ class VehicleRentalController extends Controller
 
 
     public function getStatusWithGmaps($id){
-        $ongoing = false;
+        $ongoing = 0;
         $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
 
         if($checkIfOngoing){
-            $ongoing = true;
+            $ongoing = 1;
         };
+
+
 
         $response = (new \GoogleMaps\GoogleMaps)->load('directions')
         ->setParam([
@@ -41,17 +43,23 @@ class VehicleRentalController extends Controller
         ])
        ->isLocationOnEdge(-5.360273551463675, 105.31016811262346, 500);
 
+       if($response == false ){
+        $ongoing = 2;
+
+       }
+
         return response()->json(array(
                 "ongoing" => $ongoing,
-                "diluar_batas" => $response,
         ));
 
     }
 
+    // akses ke geodb
+
     public function sendTrackHistory($id, Request $request){
 
         $track = new VehicleTrackHistory;
-        $track->vehicle_id   =  $request->id;
+        $track->vehicle_id   =  $id;
         $track->lat     =  $request->lat;
         $track->long     =  $request->long;
         $track->save();
