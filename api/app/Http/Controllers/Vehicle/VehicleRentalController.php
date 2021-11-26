@@ -25,8 +25,8 @@ class VehicleRentalController extends Controller
 
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB->latitude;
-            $track->long     =  $geoDB->longitude;
+            $track->lat     =  $geoDB['latitude'];
+            $track->long     =  $geoDB['longitude'];
             $track->save();
 
         };
@@ -52,8 +52,8 @@ class VehicleRentalController extends Controller
 
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB->latitude;
-            $track->long     =  $geoDB->longitude;
+            $track->lat     =  $geoDB['latitude'];
+            $track->long     =  $geoDB['longitude'];
             $track->save();
 
             $response = (new \GoogleMaps\GoogleMaps)->load('directions')
@@ -61,7 +61,7 @@ class VehicleRentalController extends Controller
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge($geoDB->latitude, $geoDB->longitude, $rentArea->tolerance);
+           ->isLocationOnEdge($geoDB->latitude, $geoDB['latitude'], $geoDB['longitude']);
 
            if($response == false ){
             $ongoing = 2;
