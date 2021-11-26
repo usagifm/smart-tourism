@@ -61,7 +61,7 @@ class VehicleRentalController extends Controller
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge($geoDB->latitude, $geoDB['latitude'], $geoDB['longitude']);
+           ->isLocationOnEdge( $geoDB['latitude'],$geoDB['longitude'], $rentArea->tolerance);
 
            if($response == false ){
             $ongoing = 2;
