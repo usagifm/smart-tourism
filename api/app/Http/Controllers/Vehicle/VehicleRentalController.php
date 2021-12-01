@@ -22,7 +22,6 @@ class VehicleRentalController extends Controller
             $ongoing = 1;
 
             $geoDB = Http::get('https://geolocation-db.com/json')->json();
-
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $geoDB['latitude'];
@@ -43,29 +42,22 @@ class VehicleRentalController extends Controller
 
         if($checkIfOngoing){
             $ongoing = 1;
-
             $vehicle = Vehicle::find($id);
-
             $rentArea = RentArea::find($vehicle->rent_area_id);
-
             $geoDB = Http::get('https://geolocation-db.com/json');
-
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $geoDB['latitude'];
             $track->long     =  $geoDB['longitude'];
             $track->save();
-
             $response = (new \GoogleMaps\GoogleMaps)->load('directions')
             ->setParam([
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge( $geoDB['latitude'],$geoDB['longitude'], $rentArea->tolerance);
-
+           ->isLocationOnEdge( $geoDB['latitude'], $geoDB['longitude'], $rentArea->tolerance);
            if($response == false ){
             $ongoing = 2;
-
            }
         };
 

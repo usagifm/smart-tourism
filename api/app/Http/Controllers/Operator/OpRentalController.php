@@ -63,13 +63,23 @@ class OpRentalController extends Controller
         $rental = Rental::where("id", $id)->where("vehicle_id",$vehicle_id)->where("status", "waiting")->with([ 'vehicle'])
         ->first();
 
-
         if(!$rental){
             return response()->json(array(
                 'message'   =>  "Rental record not found !"
             ), 483);
 
         };
+
+        $isOngoing = Rental::where("vehicle_id",$vehicle_id)->where("status", "ongoing")
+        ->first();
+
+        if(!$isOngoing){
+            return response()->json(array(
+                'message'   =>  "Vehicle is being used !"
+            ), 483);
+
+        };
+
 
         $now = Carbon::now();
 
