@@ -70,7 +70,7 @@ class OpRentalController extends Controller
 
         };
 
-        $isOngoing = Rental::where("vehicle_id",$vehicle_id)->where("status", "ongoing")->first();
+        $isOngoing = Rental::where("status", "ongoing")->where("vehicle_id",$vehicle_id)->first();
 
         if(!$isOngoing){
             return response()->json(array(
