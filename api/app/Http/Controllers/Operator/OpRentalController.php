@@ -60,6 +60,17 @@ class OpRentalController extends Controller
 
     public function approveRental(Request $request,$vehicle_id, $id){
 
+
+        $isOngoing = Rental::where("vehicle_id",$vehicle_id)->where("status", "ongoing")->first();
+
+        if($isOngoing){
+            return response()->json(array(
+                'message'   =>  "Vehicle is being used !"
+            ), 483);
+
+        };
+
+
         $rental = Rental::where("id", $id)->where("vehicle_id",$vehicle_id)->where("status", "waiting")->with([ 'vehicle'])
         ->first();
 
@@ -70,14 +81,6 @@ class OpRentalController extends Controller
 
         };
 
-        $isOngoing = Rental::where("status", "ongoing")->where("vehicle_id",$vehicle_id)->first();
-
-        if(!$isOngoing){
-            return response()->json(array(
-                'message'   =>  "Vehicle is being used !"
-            ), 483);
-
-        };
 
 
         $now = Carbon::now();
