@@ -20,7 +20,7 @@ class Vehicle extends Model
     }
 
     public function ongoingRental() {
-        return $this->hasMany(Rental::class, 'vehicle_id')->where("status", "ongoing" )->with(['user']);
+        return $this->hasMany(Rental::class, 'vehicle_id')->where("status", "ongoing" )->with(['user','vehiclePosition']);
     }
 
     public function vehiclePosition() {
