@@ -15,7 +15,7 @@ class Rental extends Model
     }
 
     public function vehicle() {
-        return $this->belongsTo(Vehicle::class, 'vehicle_id')->with(['user','vehiclePosition']);
+        return $this->belongsTo(Vehicle::class, 'vehicle_id')->with(['vehiclePosition']);
     }
 
     public function invoice() {
