@@ -16,8 +16,8 @@ class CreateVehicleTrackHistoriesTable extends Migration
         Schema::create('vehicle_track_histories', function (Blueprint $table) {
             $table->id();
             $table->integer('vehicle_id');
-            $table->decimal('lat',10, 8);
-            $table->decimal('long',11, 8);
+            $table->double('lat',11, 8);
+            $table->double('long',11, 8);
             $table->timestamps();
         });
     }

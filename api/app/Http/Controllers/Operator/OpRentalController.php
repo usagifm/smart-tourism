@@ -44,12 +44,16 @@ class OpRentalController extends Controller
         ->first();
 
 
+
         if(!$rental){
             return response()->json(array(
                 'message'   =>  "Rental record not found !"
             ), 483);
 
         };
+
+
+        if($rental->status == "ended" || $rental->status == "paid")
 
         return response()->json(
                 $rental
