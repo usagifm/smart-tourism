@@ -20,9 +20,8 @@ class Vehicle extends Model
     }
 
     public function ongoingRental() {
-        return $this->hasMany(Rental::class, 'vehicle_id')->where("status", "ongoing" );
+        return $this->hasMany(Rental::class, 'vehicle_id')->where("status", "ongoing" )->with(['user','vehiclePosition']);
     }
-
 
     public function vehiclePosition() {
         return $this->hasOne(VehicleTrackHistory::class, 'vehicle_id')->latest('created_at');

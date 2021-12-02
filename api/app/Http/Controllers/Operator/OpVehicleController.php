@@ -32,7 +32,7 @@ class OpVehicleController extends Controller
 
     public function getVehicleDetail($id){
 
-        $vehicle = Vehicle::where("id", $id)->with(['vehicleType', 'rentArea','ongoingRental'])
+        $vehicle = Vehicle::where("id", $id)->with(['vehicleType', 'rentArea','ongoingRental','vehiclePosition'])
         ->first();
 
 
