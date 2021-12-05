@@ -32,8 +32,9 @@ class VehicleRentalController extends Controller
 
         };
 
+        $memek = json_decode($geolocate->getBody());
 
-        return response(json_decode($geolocate->getBody()));
+        return response($memek);
 
     }
 
