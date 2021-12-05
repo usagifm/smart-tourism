@@ -38,9 +38,8 @@ class VehicleRentalController extends Controller
 
         };
 
-        return response()->json(array($ongoing,
-        $geolocate
-    ));
+
+        return response()->json($ongoing);
 
     }
 
