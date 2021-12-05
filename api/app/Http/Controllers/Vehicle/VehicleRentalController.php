@@ -15,11 +15,11 @@ class VehicleRentalController extends Controller
 {
 
     public function getStatus($id){
-        $ongoing = 0;
-        $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
+        // $ongoing = 0;
+        // $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
 
-        if($checkIfOngoing){
-            $ongoing = 1;
+        // if($checkIfOngoing){
+        //     $ongoing = 1;
 
             $geolocate = Http::withHeaders([
                 'Content-Type' => 'application/json',
@@ -30,7 +30,7 @@ class VehicleRentalController extends Controller
             // $track->long     =  $geolocate['location']['lng'];
             // $track->save();
 
-        };
+        // };
 
         $memek = json_decode($geolocate->getBody());
 
