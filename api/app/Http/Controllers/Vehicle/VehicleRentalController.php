@@ -21,11 +21,11 @@ class VehicleRentalController extends Controller
         if($checkIfOngoing){
             $ongoing = 1;
 
-            $geoDB = Http::get('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE')->json();
+            $geolocate = Http::post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE')->json();
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB['latitude'];
-            $track->long     =  $geoDB['longitude'];
+            $track->lat     =  $geolocate['location']['lat'];
+            $track->long     =  $geolocate['location']['lng'];
             $track->save();
 
         };
@@ -44,18 +44,18 @@ class VehicleRentalController extends Controller
             $ongoing = 1;
             $vehicle = Vehicle::find($id);
             $rentArea = RentArea::find($vehicle->rent_area_id);
-            $geoDB = Http::get('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
+            $geolocate = Http::post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB['latitude'];
-            $track->long     =  $geoDB['longitude'];
+            $track->lat     =  $geolocate['location']['lat'];
+            $track->long     =  $geolocate['location']['lng'];
             $track->save();
             $response = (new \GoogleMaps\GoogleMaps)->load('directions')
             ->setParam([
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge( $geoDB['latitude'], $geoDB['longitude'], $rentArea->tolerance);
+           ->isLocationOnEdge($geolocate['location']['lat'], $geolocate['location']['lng'], $rentArea->tolerance);
            if($response == false ){
             $ongoing = 2;
            }
