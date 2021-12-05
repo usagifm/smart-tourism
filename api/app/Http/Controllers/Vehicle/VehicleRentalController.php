@@ -22,9 +22,7 @@ class VehicleRentalController extends Controller
         if($checkIfOngoing){
             $ongoing = 1;
 
-            $client = new Client([
-                'headers' => [ 'Content-Type' => 'application/json' ]
-            ]);
+            $client = new Client();
 
             $response = $client->request('POST', 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
 
