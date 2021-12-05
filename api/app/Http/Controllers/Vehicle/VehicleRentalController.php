@@ -21,7 +21,7 @@ class VehicleRentalController extends Controller
         if($checkIfOngoing){
             $ongoing = 1;
 
-            $geoDB = Http::get('https://geolocation-db.com/json')->json();
+            $geoDB = Http::get('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE')->json();
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $geoDB['latitude'];
