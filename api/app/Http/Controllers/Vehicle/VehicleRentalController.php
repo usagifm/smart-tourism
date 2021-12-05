@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vehicle;
 
 use App\Models\Rental;
+use GuzzleHttp\Client;
 use App\Models\Vehicle;
 use App\Models\RentArea;
 use GoogleMaps\GoogleMaps;
@@ -21,9 +22,11 @@ class VehicleRentalController extends Controller
         // if($checkIfOngoing){
         //     $ongoing = 1;
 
-            $geolocate = Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])->POST('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
+
+
+            // $geolocate = Http::withHeaders([
+            //     'Content-Type' => 'application/json',
+            // ])->POST('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
             // $track = new VehicleTrackHistory;
             // $track->vehicle_id   =  $id;
             // $track->lat     =  $geolocate['location']['lat'];
@@ -32,9 +35,11 @@ class VehicleRentalController extends Controller
 
         // };
 
-        $memek = $geolocate;
+        $client = new Client(['base_uri' => 'https://www.googleapis.com/']);
 
-        return response($memek);
+        $response = $client->request('POST', '/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
+
+        return response($response);
 
     }
 
