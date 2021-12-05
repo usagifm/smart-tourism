@@ -31,7 +31,7 @@ class VehicleRentalController extends Controller
         };
 
 
-        return response(json_decode($geolocate));
+        return response($geolocate->json_decode());
 
     }
 
