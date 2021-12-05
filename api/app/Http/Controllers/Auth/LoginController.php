@@ -39,6 +39,10 @@ class LoginController extends Controller
 
         }
 
+        $user->fcm_registration_id = $request->fcm_registration_id;
+        $user->save();
+
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([

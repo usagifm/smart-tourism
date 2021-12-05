@@ -44,7 +44,7 @@ class VehicleRentalController extends Controller
             $ongoing = 1;
             $vehicle = Vehicle::find($id);
             $rentArea = RentArea::find($vehicle->rent_area_id);
-            $geoDB = Http::get('https://geolocation-db.com/json');
+            $geoDB = Http::get('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $geoDB['latitude'];

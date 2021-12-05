@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->bigInteger('nik');
             $table ->integer('phone');
+            $table ->string('fcm_registration_id');
             $table->rememberToken();
             $table->timestamps();
         });

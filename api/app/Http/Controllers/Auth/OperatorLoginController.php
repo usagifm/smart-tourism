@@ -39,6 +39,8 @@ class OperatorLoginController extends Controller
         }
 
         $token = $operator->createToken('op_token')->plainTextToken;
+        $operator->fcm_registration_id = $request->fcm_registration_id;
+        $operator->save();
 
         return response()->json([
                    'access_token' => $token,
