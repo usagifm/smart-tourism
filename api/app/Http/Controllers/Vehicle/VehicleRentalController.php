@@ -28,7 +28,7 @@ class VehicleRentalController extends Controller
 
             $response = $client->request('POST', 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
 
-            $geolocate = response(json_decode($response->getBody()))->json();
+            $geolocate = response()->json(json_decode($response->getBody()));
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $geolocate['location']['lat'];
