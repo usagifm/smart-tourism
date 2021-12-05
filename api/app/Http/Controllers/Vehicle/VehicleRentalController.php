@@ -21,9 +21,7 @@ class VehicleRentalController extends Controller
         if($checkIfOngoing){
             $ongoing = 1;
 
-            $geolocate = Http::withHeaders([
-                'Content-Type' => 'application/json',
-            ])->post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE");
+            $geolocate = Http::post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE");
             // $track = new VehicleTrackHistory;
             // $track->vehicle_id   =  $id;
             // $track->lat     =  $geolocate['location']['lat'];
