@@ -120,7 +120,7 @@ class OpRentalController extends Controller
 
 
         $curl = curl_init();
-        $authKey = "key="+ env('FCM_SERVER_KEY');
+        $authKey = "key=". env('FCM_SERVER_KEY');
         $registration_ids = [$user->fcm_registration_id];
         curl_setopt_array($curl, array(
         CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",

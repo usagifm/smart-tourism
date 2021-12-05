@@ -19,10 +19,8 @@ class Rental extends Model
     }
 
     public function invoice() {
-        return $this->hasOne(invoice::class, 'rental_id')->withDefault();
+        return $this->hasOne(invoice::class, 'rental_id');
     }
-
-
 
     public function vehiclePosition() {
         return $this->hasOne(VehicleTrackHistory::class, 'vehicle_id')->latest('created_at');
