@@ -16,30 +16,29 @@ class VehicleRentalController extends Controller
 {
 
     public function getStatus($id){
-        // $ongoing = 0;
-        // $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
+        $ongoing = 0;
+        $checkIfOngoing = Rental::where("vehicle_id",$id)->where("status", "ongoing")->first();
 
-        // if($checkIfOngoing){
-        //     $ongoing = 1;
+        if($checkIfOngoing){
+            $ongoing = 1;
 
+            $client = new Client([
+                'headers' => [ 'Content-Type' => 'application/json' ]
+            ]);
 
+            $response = $client->request('POST', 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
 
-            // $geolocate = Http::withHeaders([
-            //     'Content-Type' => 'application/json',
-            // ])->POST('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
-            // $track = new VehicleTrackHistory;
-            // $track->vehicle_id   =  $id;
-            // $track->lat     =  $geolocate['location']['lat'];
-            // $track->long     =  $geolocate['location']['lng'];
-            // $track->save();
+            $geolocate = json_decode($response->getBody());
+            $geolocate = $geolocate->json();
+            $track = new VehicleTrackHistory;
+            $track->vehicle_id   =  $id;
+            $track->lat     =  $geolocate['location']['lat'];
+            $track->long     =  $geolocate['location']['lng'];
+            $track->save();
 
-        // };
+        };
 
-        $client = new Client(['base_uri' => 'https://www.googleapis.com/']);
-
-        $response = $client->request('POST', '/geolocation/v1/geolocate?key=AIzaSyCcFHfVyWdI8H1YG67kyUup7VRq1P_fTOE');
-
-        return response($response);
+        return response($geolocate);
 
     }
 
