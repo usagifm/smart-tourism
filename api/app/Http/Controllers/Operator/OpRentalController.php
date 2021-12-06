@@ -42,7 +42,7 @@ class OpRentalController extends Controller
 
     public function getRentalDetail($vehicle_id, $id){
 
-        $rental = Rental::where("id", $id)->where("vehicle_id",$vehicle_id)->with(['user', 'vehicle'])
+        $rental = Rental::where("id", $id)->where("vehicle_id",$vehicle_id)->with(['user', 'vehicle','invoice'])
         ->first();
 
 
@@ -55,10 +55,7 @@ class OpRentalController extends Controller
         };
 
 
-        // if($rental->status == "ended" || $rental->status == "paid"){
 
-
-        // }
 
 
         return response()->json(
