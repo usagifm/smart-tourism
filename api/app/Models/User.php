@@ -22,7 +22,6 @@ class User extends Authenticatable
         return $this->hasMany(Rental::class, 'user_id')->where("status", "ongoing");
     }
 
-
     public function ended_rental() {
         return $this->hasMany(Rental::class, 'user_id')->where("status", "ended");
     }

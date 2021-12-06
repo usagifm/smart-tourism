@@ -26,8 +26,7 @@ class AdminUserController extends Controller
     }
 
     public function getUserDetail($id){
-        $user = User::find($id)->with(['waiting_rental', 'ongoing_rental','ended_rental', 'paid_rental'])
-        ->first();
+        $user = User::where('id' ,$id)->with(['waiting_rental', 'ongoing_rental','ended_rental', 'paid_rental'])->first();
         if($user == null){
             return response()->json(array(
                 'message'   =>  "No Data Available "

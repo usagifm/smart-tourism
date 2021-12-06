@@ -19,7 +19,7 @@ class Rental extends Model
     }
 
     public function invoice() {
-        return $this->hasOne(invoice::class, 'rental_id')->withDefault();
+        return $this->hasOne(invoice::class, 'rental_id');
     }
 
     public function vehiclePosition() {
