@@ -24,7 +24,7 @@ class OperatorLoginController extends Controller
             // ]);
             return response()->json(array(
                 'code'      =>  401,
-                'message'   =>  "The provided credentials are incorrect."
+                'message'   =>  "Data yang anda masukan salah"
             ), 401);
         }
 
@@ -33,7 +33,7 @@ class OperatorLoginController extends Controller
         if($total >= 1){
             return response()->json(array(
                 'code'      =>  401,
-                'message'   =>  "Can only login in one device! "
+                'message'   =>  "Akun hanya bisa dalam 1 perangkat !"
             ), 401);
 
         }
