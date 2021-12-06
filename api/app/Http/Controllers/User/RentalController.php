@@ -15,7 +15,7 @@ class RentalController extends Controller
         ->first();
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
 
         };

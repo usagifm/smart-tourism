@@ -19,7 +19,7 @@ class OpVehicleController extends Controller
 
         if($vehicles == null){
             return response()->json(array(
-                'message'   =>  "No Data Available "
+                'message'   =>  "Data kendaraan tidak tersedia!"
             ), 200);
 
         };
@@ -38,7 +38,7 @@ class OpVehicleController extends Controller
 
         if(!$vehicle){
             return response()->json(array(
-                'message'   =>  "Vehicle record not found !"
+                'message'   =>  "Data kendaraan tidak tersedia!"
             ), 483);
 
         };

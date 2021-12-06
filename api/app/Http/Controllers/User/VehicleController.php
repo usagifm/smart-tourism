@@ -19,7 +19,7 @@ class VehicleController extends Controller
 
         if($vehicles == null){
             return response()->json(array(
-                'message'   =>  "No Data Available "
+                'message'   =>  "Data Kendaraan tidak ditemukan!"
             ), 200);
 
         };
@@ -39,7 +39,7 @@ class VehicleController extends Controller
 
         if(!$vehicle){
             return response()->json(array(
-                'message'   =>  "Vehicle record not found !"
+                'message'   =>  "Data Kendaraan tidak ditemukan!"
             ), 483);
 
         };
@@ -57,13 +57,13 @@ class VehicleController extends Controller
 
         if(!$vehicle)
         return response()->json(array(
-            'message'   =>  "Vehicle record not found !"
+            'message'   =>  "Data Kendaraan tidak ditemukan!"
         ), 483);
 
 
         if($vehicle->is_available != 1)
         return response()->json(array(
-            'message'   =>  "Vehicle is not available !"
+            'message'   =>  "Data Kendaraan tidak tersedia!"
         ), 483);
 
 
@@ -71,7 +71,7 @@ class VehicleController extends Controller
 
         if($alreadyOrder)
         return response()->json(array(
-            'message'   =>  "You already ordered the vehicle"
+            'message'   =>  "Anda telah memesan kendaraan ini !"
         ), 483);
 
 
@@ -79,7 +79,7 @@ class VehicleController extends Controller
 
         if($rentalOngoing)
         return response()->json(array(
-            'message'   =>  "Vehicle is being used !"
+            'message'   =>  "Kendaraan sedang digunakan !"
         ), 483);
 
 
@@ -91,7 +91,7 @@ class VehicleController extends Controller
 
 
         return response()->json(array(
-            'message'   =>  "Order success, please ask operator to accept the order"
+            'message'   =>  "Pesanan berhasil, silahkan minta operator untuk di terima"
         ), 200);
 
     }

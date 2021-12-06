@@ -49,7 +49,7 @@ class OpRentalController extends Controller
 
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
 
         };
@@ -72,7 +72,7 @@ class OpRentalController extends Controller
 
         if($isOngoing){
             return response()->json(array(
-                'message'   =>  "Vehicle is being used !"
+                'message'   =>  "Kendaraan sedang digunakan !"
             ), 483);
 
         };
@@ -83,7 +83,7 @@ class OpRentalController extends Controller
 
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
 
         };
@@ -162,7 +162,7 @@ class OpRentalController extends Controller
 
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
         };
 
@@ -171,7 +171,7 @@ class OpRentalController extends Controller
         };
 
         return response()->json(array(
-            'message'   =>  "Order deleted !"
+            'message'   =>  "Pesanan dihapus !"
         ), 200);
 
     }
@@ -184,7 +184,7 @@ class OpRentalController extends Controller
 
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
 
         };
@@ -218,7 +218,7 @@ class OpRentalController extends Controller
 
 
         return response()->json(array(
-            'message'   =>  "Rental Ended, ask customer money pls"
+            'message'   =>  "Rental telah usai, silahkan menagih pengguna kendaraan"
         ), 200);
 
     }
@@ -231,7 +231,7 @@ class OpRentalController extends Controller
 
         if(!$rental){
             return response()->json(array(
-                'message'   =>  "Rental record not found !"
+                'message'   =>  "Data rental tidak ditemukan!"
             ), 483);
 
         };
@@ -247,7 +247,7 @@ class OpRentalController extends Controller
         $invoice->save();
 
         return response()->json(array(
-            'message'   =>  "Rental has been paid !"
+            'message'   =>  "Rental telah dibayar!"
         ), 200);
 
     }
