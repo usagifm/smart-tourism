@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -18,23 +21,52 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    use AuthenticatesUsers;
+        $user = User::where('email', $request->email)->first();
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            // throw ValidationException::withMessages([
+            //     'email' => ['The provided credentials are incorrect.'],
+            // ]);
+            return response()->json(array(
+                'code'      =>  401,
+                'message'   =>  "The provided credentials are incorrect."
+            ), 401);
+        }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+        $total = $user->tokens()->count();
+
+        if($total >= 1){
+            return response()->json(array(
+                'code'      =>  401,
+                'message'   =>  "Can only login in one device! "
+            ), 401);
+
+        }
+
+        $user->fcm_registration_id = $request->fcm_registration_id;
+        $user->save();
+
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+                   'access_token' => $token,
+                   'token_type' => 'Bearer',
+                   'total' => $total
+        ]);
+
     }
-}
+
+        public function logout(Request $request){
+
+            return $request->user()->currentAccessToken()->delete();
+        }
+
+
+    }
