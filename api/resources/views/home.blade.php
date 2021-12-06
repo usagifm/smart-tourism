@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- @dd($data) --}}
+
 @section('custom_styles')
 <style>
     #map {
