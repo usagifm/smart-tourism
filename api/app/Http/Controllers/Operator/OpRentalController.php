@@ -55,7 +55,11 @@ class OpRentalController extends Controller
         };
 
 
-        if($rental->status == "ended" || $rental->status == "paid")
+        // if($rental->status == "ended" || $rental->status == "paid"){
+
+
+        // }
+
 
         return response()->json(
                 $rental
