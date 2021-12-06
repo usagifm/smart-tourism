@@ -69,7 +69,7 @@ class VehicleRentalController extends Controller
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge($request->lat, $request->long, $rentArea->tolerance);
+           ->isLocationOnEdge($request->query('lat'), $request->query('long'), $rentArea->tolerance);
            if($response == false ){
             $ongoing = 2;
            }
@@ -86,8 +86,8 @@ class VehicleRentalController extends Controller
 
         $track = new VehicleTrackHistory;
         $track->vehicle_id   =  $id;
-        $track->lat     =  $request->lat;
-        $track->long     =  $request->long;
+        $track->lat     =  $request->query('lat');
+        $track->long     =  $request->query('long');
         $track->save();
         return response()->json(array(
                 "message" => "Data saved ! ",
