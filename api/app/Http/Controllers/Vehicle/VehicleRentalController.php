@@ -30,13 +30,11 @@ class VehicleRentalController extends Controller
 
             // $geolocate = json_decode($response->getBody(), true);
 
-            $geoDB = Http::get('https://geolocation-db.com/json')->json();
-
-            $track = new VehicleTrackHistory;
-            $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB['latitude'];
-            $track->long     =  $geoDB['longitude'];
-            $track->save();
+            // $track = new VehicleTrackHistory;
+            // $track->vehicle_id   =  $id;
+            // $track->lat     =  $geolocate['location']['lat'];
+            // $track->long     =  $geolocate['location']['lng'];
+            // $track->save();
 
         };
 
@@ -65,20 +63,13 @@ class VehicleRentalController extends Controller
             // $track->long     =  $geolocate['location']['lng'];
             // $track->save();
 
-            $geoDB = Http::get('https://geolocation-db.com/json')->json();
-
-            $track = new VehicleTrackHistory;
-            $track->vehicle_id   =  $id;
-            $track->lat     =  $geoDB['latitude'];
-            $track->long     =  $geoDB['longitude'];
-            $track->save();
 
             $response = (new \GoogleMaps\GoogleMaps)->load('directions')
             ->setParam([
                 'origin'          => 'place_id:'.$rentArea->origin,
                 'destination'     => 'place_id:'.$rentArea->destination,
             ])
-           ->isLocationOnEdge( $geoDB['latitude'], $geoDB['longitude'], $rentArea->tolerance);
+           ->isLocationOnEdge($request->query('lat'), $request->query('long'), $rentArea->tolerance);
            if($response == false ){
             $ongoing = 2;
            }
@@ -96,7 +87,7 @@ class VehicleRentalController extends Controller
         $track = new VehicleTrackHistory;
         $track->vehicle_id   =  $id;
         $track->lat     =  $request->query('lat');
-        $track->long     =  $request->query('long');
+        $track->long     =  $request->query('lat');
         $track->save();
         return response()->json(array(
                 "message" => "Data saved ! ",
