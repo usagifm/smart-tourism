@@ -65,7 +65,7 @@ class VehicleRentalController extends Controller
             $track = new VehicleTrackHistory;
             $track->vehicle_id   =  $id;
             $track->lat     =  $request->query('lat');
-            $track->long     =  $request->query('lat');
+            $track->long     =  $request->query('long');
             $track->save();
 
 
@@ -92,7 +92,7 @@ class VehicleRentalController extends Controller
         $track = new VehicleTrackHistory;
         $track->vehicle_id   =  $id;
         $track->lat     =  $request->query('lat');
-        $track->long     =  $request->query('lat');
+        $track->long     =  $request->query('long');
         $track->save();
         return response()->json(array(
                 "message" => "Data saved ! ",
