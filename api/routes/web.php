@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\WebLoginController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
+Route::get('login', [WebLoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [WebLoginController::class, 'login']);
+
+Route::post('logout', [WebLoginController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

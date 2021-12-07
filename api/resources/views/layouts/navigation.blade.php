@@ -19,18 +19,18 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>{{ __('Dashboard') }}</span></a>
     </li>
-    {{--
+    {{--     
     <!-- Nav Item - Tables -->
     <li class="nav-item @if(request()->routeIs('users.index')) active @endif">
         <a class="nav-link" href="{{ route('users.index') }}">
             <i class="fas fa-fw fa-users"></i>
-            <span>{{ __('Users') }}</span></a>
-    </li> --}}
+            <span>{{ __('Tabel Admin') }}</span></a>
+    </li> --}} 
 
     <li class="nav-item @if(request()->routeIs('vehicles.index')) active @endif">
         <a class="nav-link" href="{{ route('vehicles.index') }}">
-            <i class="fas fa-fw fa-bicycle"></i>
-            <span>{{ __('Vehicle') }}</span></a>
+            <i class="fas fa-fw fa-info"></i>
+            <span>{{ __('Tabel Informasi') }}</span></a>
     </li>
 
     <li class="nav-item @if(request()->routeIs('statistic')) active @endif">

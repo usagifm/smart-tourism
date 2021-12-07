@@ -1,17 +1,21 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+
 class RegisterController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $request->validate([
-            'name'=>['required'],
-            'email'=>['required', 'email', 'unique:users,email'],
-            'password'=>['required','min:8', 'confirmed'],
-            'nik'=>  'required|digits:16|numeric',
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'nik' =>  'required|digits:16|numeric',
             'phone' => 'required|min:10|numeric',
         ]);
         $user = User::create([
@@ -24,8 +28,8 @@ class RegisterController extends Controller
         ]);
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-                   'access_token' => $token,
-                   'token_type' => 'Bearer',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
         ]);
     }
 }

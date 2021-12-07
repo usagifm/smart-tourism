@@ -1,5 +1,13 @@
 @extends('layouts.guest')
 
+@section('custom_styles')
+<style>
+.bg-img{
+    background-image: url("{{asset('images/ICT.png')}}");
+}
+</style>
+@endsection
+
 @section('content')
     <!-- Outer Row -->
     <div class="row justify-content-center">
@@ -10,7 +18,7 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                        <div class="col-lg-6 d-none d-lg-block bg-img"></div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
@@ -47,7 +55,7 @@
                                             <label class="custom-control-label" for="customCheck">{{ __('Remember Me') }}</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-danger btn-user btn-block">
                                         {{ __('Login') }}
                                     </button>
                                 </form>
@@ -55,11 +63,6 @@
                                 @if (Route::has('password.request'))
                                 <div class="text-center">
                                     <a class="small" href="{{ route('password.request') }}">{{ __('Forgot Password?') }}</a>
-                                </div>
-                                @endif
-                                @if (Route::has('register'))
-                                <div class="text-center">
-                                    <a class="small" href="{{ route('register') }}">{{ __('Create New Account!') }}</a>
                                 </div>
                                 @endif
                             </div>
