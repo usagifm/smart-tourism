@@ -62,6 +62,11 @@ class VehicleRentalController extends Controller
             // $track->lat     =  $geolocate['location']['lat'];
             // $track->long     =  $geolocate['location']['lng'];
             // $track->save();
+            $track = new VehicleTrackHistory;
+            $track->vehicle_id   =  $id;
+            $track->lat     =  $request->query('lat');
+            $track->long     =  $request->query('lat');
+            $track->save();
 
 
             $response = (new \GoogleMaps\GoogleMaps)->load('directions')
