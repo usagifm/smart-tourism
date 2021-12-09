@@ -97,18 +97,18 @@ class OpRentalController extends Controller
             $startTime = Carbon::parse($startTime)->timestamp;
 
             $min = Floor(($now - $startTime)/60);
-            $sec = ($now - $startTime)%60;
-            $duration = "{$min}:{$sec}";
+
+            return response()->json(array(
+                'rental'=> $rental,
+                'duration' => $min,
+            ));
 
         }
 
-        return response()->json(array(
-               'rental'=> $rental,
-                'duration' => $this->time_elapsed_string($rental->date_time_start),
-                'start_time' => $startTime,
-                'now_time' => $now
-        ));
 
+        return response()->json(array(
+            'rental'=> $rental
+        ));
     }
 
 

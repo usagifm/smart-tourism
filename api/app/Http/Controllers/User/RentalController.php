@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\Rental;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\VehicleTrackHistory;
+use App\Http\Controllers\Controller;
 
 class RentalController extends Controller
 {
@@ -23,6 +24,23 @@ class RentalController extends Controller
         if($rental->status == "ongoing"){
             $location = VehicleTrackHistory::where("vehicle_id", $rental->vehicle_id)->latest()->first();
         };
+
+
+
+        if($rental->status == 'ongoing'){
+            $now = Carbon::now()->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $duration = Floor(($now - $startTime)/60);
+
+            return response()->json(array(
+                 $rental,
+                 $duration,
+                 $location
+            ));
+
+        }
         return response()->json(array(
                 $rental,
                 $location
