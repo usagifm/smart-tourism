@@ -44,7 +44,8 @@ class User extends Authenticatable
         'email',
         'password',
         'nik',
-        'phone'
+        'phone',
+        'fcm_registration_id'
     ];
 
     /**

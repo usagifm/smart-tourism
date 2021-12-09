@@ -26,6 +26,7 @@ class RegisterController extends Controller
             'phone' => $request->phone,
             'fcm_registration_id' => $request->fcm_registration_id
         ]);
+
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'access_token' => $token,
