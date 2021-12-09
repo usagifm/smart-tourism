@@ -104,7 +104,7 @@ class OpRentalController extends Controller
 
         return response()->json(array(
                'rental'=> $rental,
-                'duration' => $this->time_elapsed_string("{$startTime}", true),
+                'duration' => $this->time_elapsed_string($rental->date_time_start),
                 'start_time' => $startTime,
                 'now_time' => $now
         ));
