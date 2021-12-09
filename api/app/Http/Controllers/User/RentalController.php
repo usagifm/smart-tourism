@@ -35,15 +35,15 @@ class RentalController extends Controller
             $duration = Floor(($now - $startTime)/60);
 
             return response()->json(array(
-                 $rental,
-                 $duration,
-                 $location
+                'rental'=> $rental,
+                'duration' => $duration,
+                'location' => $location
             ));
 
         }
         return response()->json(array(
-                $rental,
-                $location
+            'rental'=> $rental,
+            'location' => $location
         ));
 
     }
