@@ -54,13 +54,25 @@ class OpRentalController extends Controller
 
         };
 
+        $duration = null;
+        $now = null;
+        $startTime = null;
 
+        if($rental->status == 'ongoing'){
+            $now = Carbon::now()->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
 
+            $duration = $now - $startTime;
 
+        }
 
-        return response()->json(
-                $rental
-        );
+        return response()->json(array(
+               'rental'=> $rental,
+                'duration' => $duration,
+                'start_time' => $startTime,
+                'now_time' => $now
+        ));
 
     }
 
@@ -105,7 +117,7 @@ class OpRentalController extends Controller
         $invoice->is_paid     =  0;
         $invoice->save();
 
-        $user = User::find($rental->user_id);
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArra();
 
 
         // Http::withHeaders([
@@ -118,35 +130,23 @@ class OpRentalController extends Controller
         //      }`
         // ]);
 
+        if ($tokens != null){
+            $data = [
+                "registration_ids" => $tokens,
+                "notification" => [
+                    "title" => "Hore ! Pesanan sewa kendaraan anda di setujui !",
+                    "body" => "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara",
+                    "icon" => "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lambang_Kabupaten_Tulang_Bawang_Barat.png/640px-Lambang_Kabupaten_Tulang_Bawang_Barat.png",
+                ],
+                "data" => [
+                    "rental" => $rental
+                ]
+            ];
 
+            $encodedData = json_encode($data);
 
-        // $curl = curl_init();
-        // $authKey = "key=". env('FCM_SERVER_KEY');
-        // $registration_ids = [$user->fcm_registration_id];
-        // curl_setopt_array($curl, array(
-        // CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
-        // CURLOPT_RETURNTRANSFER => true,
-        // CURLOPT_ENCODING => "",
-        // CURLOPT_MAXREDIRS => 10,
-        // CURLOPT_TIMEOUT => 30,
-        // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        // CURLOPT_CUSTOMREQUEST => "POST",
-        // CURLOPT_POSTFIELDS => '{
-        //                 "registration_ids": ' . $registration_ids . ',
-        //                 "notification": {
-        //                     "title": "Hore ! Pesanan sewa kendaraan anda di setujui !",
-        //                     "body": "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara"
-        //                 }
-        //             }',
-        // CURLOPT_HTTPHEADER => array(
-        //     "Authorization: " . $authKey,
-        //     "Content-Type: application/json",
-        //     "cache-control: no-cache"
-        // ),
-        // ));
-
-        // curl_exec($curl);
-
+            $this->sendNotification($encodedData);
+        }
 
         return response()->json(
         $rental
