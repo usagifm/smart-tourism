@@ -65,7 +65,7 @@ class OpRentalController extends Controller
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
 
-            $min = ($now - $startTime)/60;
+            $min = Floor(($now - $startTime)/60);
             $sec = ($now - $startTime)%60;
             $duration = "{$min}:{$sec}";
 
