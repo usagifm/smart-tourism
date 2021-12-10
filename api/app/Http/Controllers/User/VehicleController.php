@@ -99,7 +99,7 @@ class VehicleController extends Controller
 
     public function getVehicleTypeAvailable($id){
 
-        $vehicleType = VehicleType::where("id", $id)->first()->with(['vehicle']);
+        $vehicleType = VehicleType::where("id", $id)->with(['vehicle'])->first();
 
 
         if(!$vehicleType){
