@@ -11,7 +11,7 @@ class Rental extends Model
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('utc');
+    return $date->format('M d Y');
 }
 
     public function user() {

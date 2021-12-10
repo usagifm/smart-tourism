@@ -12,7 +12,7 @@ class Vehicle extends Model
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('utc');
+    return $date->format('M d Y');
 }
 
     protected $guarded= ['id'];
