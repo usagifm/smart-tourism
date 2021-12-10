@@ -11,7 +11,7 @@ class VehicleTrackHistory extends Model
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('u');
+    return $date->format('utc');
 }
 }
 

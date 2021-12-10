@@ -21,7 +21,7 @@ class Admin extends Authenticatable
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('u');
+    return $date->format('utc');
 }
 
 
