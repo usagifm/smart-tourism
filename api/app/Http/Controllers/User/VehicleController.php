@@ -97,6 +97,26 @@ class VehicleController extends Controller
     }
 
 
+    public function getVehicleTypeAvailable($id){
+
+        $vehicleType = VehicleType::where("id", $id)->first()->with(['vehicle']);
+
+
+        if(!$vehicleType){
+            return response()->json(array(
+                'message'   =>  "Data Kendaraan tidak ditemukan!"
+            ), 483);
+
+        };
+
+        return response()->json(
+                $vehicleType
+        );
+
+    }
+
+
+
 
 
 }
