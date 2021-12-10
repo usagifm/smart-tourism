@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('M d Y');
+    return $date->format('Y-m-d H:i:s');
 }
 
 

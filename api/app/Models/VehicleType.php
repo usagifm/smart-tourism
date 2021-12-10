@@ -15,7 +15,7 @@ class VehicleType extends Model
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('M d Y');
+    return $date->format('Y-m-d H:i:s');
 }
 
     protected $fillable = [
