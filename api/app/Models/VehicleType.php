@@ -10,7 +10,7 @@ class VehicleType extends Model
     use HasFactory;
 
     public function vehicle() {
-        return $this->hasMany(Vehicle::class, 'vehicle_type_id')->with(['ongoingRental']);
+        return $this->hasMany(Vehicle::class, 'vehicle_type_id')->with(['ongoingRental','rentArea']);
     }
 
 
