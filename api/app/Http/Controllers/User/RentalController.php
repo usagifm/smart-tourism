@@ -59,8 +59,11 @@ class RentalController extends Controller
         $rentalEnded = Rental::where("user_id" , $request->user()->id)->where("status", "ended")->with(['vehicle', 'invoice'])
         ->get();
 
+        $totalPaidRental = Rental::where("user_id", $request->user()->id)->where("status", "paid")->count();
+
 
         return response()->json(array(
+              "total_paid_rental" => $totalPaidRental,
                "waiting" => $rentalWaiting,
                "ongoing" => $rentalOngoing,
                "ended" => $rentalEnded,
