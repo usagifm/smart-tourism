@@ -19,6 +19,10 @@ class Admin extends Authenticatable
         'password',
     ];
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
 
 
     protected $hidden = [

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class VehicleTrackHistory extends Model
 {
     use HasFactory;
+
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
 }
+}
+

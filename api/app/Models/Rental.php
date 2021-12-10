@@ -9,6 +9,10 @@ class Rental extends Model
 {
     use HasFactory;
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id')->withDefault();

@@ -9,6 +9,11 @@ class RentArea extends Model
 {
     use HasFactory;
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
+
 
     protected $fillable = [
         'name',

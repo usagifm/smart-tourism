@@ -13,6 +13,10 @@ class VehicleType extends Model
         return $this->hasMany(Vehicle::class, 'vehicle_type_id');
     }
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
 
     protected $fillable = [
         'type',

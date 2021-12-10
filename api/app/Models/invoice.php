@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class invoice extends Model
 {
     use HasFactory;
+
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
 }

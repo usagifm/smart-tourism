@@ -19,6 +19,11 @@ class Operator extends Authenticatable
         'password',
     ];
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('c');
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *
