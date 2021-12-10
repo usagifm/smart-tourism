@@ -11,6 +11,6 @@ class invoice extends Model
 
     protected function serializeDate(\DateTimeInterface $date)
 {
-    return $date->format('c');
+    return $date->format('u');
 }
 }
