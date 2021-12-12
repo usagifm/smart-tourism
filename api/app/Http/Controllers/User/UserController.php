@@ -11,7 +11,7 @@ class UserController extends Controller
 public function user(Request $request){
 
 
-    $rentalPaid = Rental::where("user_id" , $request->user()->id)->where("status", "paid")->get();
+    $rentalPaid = Rental::where("user_id" , $request->user()->id)->where("status", "paid")->get()->count();
 
     return response()->json(array(
         'user' => $request->user(),

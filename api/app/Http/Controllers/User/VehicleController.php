@@ -102,7 +102,7 @@ class VehicleController extends Controller
 
         if(!$vehicleTypeDetail)
         return response()->json(array(
-            'message'   =>  "Data tipe kendaraan tidak ditemukan!"
+            'message'   =>  "Data tipe kendaraan tidak ditemukan !"
         ), 483);
 
 
