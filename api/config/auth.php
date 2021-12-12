@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin'
+        ]
     ],
 
     /*
@@ -61,10 +65,10 @@ return [
 
     'providers' => [
         'operator' => [
-                    'driver' => 'sanctum',
-                    'provider' => 'operators',
-                ],
+            'driver' => 'sanctum',
+            'provider' => 'operators',
         ],
+    ],
 
     'providers' => [
         'users' => [
@@ -76,6 +80,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Operator::class,
         ],
+
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class
+        ]
     ],
 
     /*
@@ -96,6 +105,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admin' => [
+            'provider' => 'admin',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
