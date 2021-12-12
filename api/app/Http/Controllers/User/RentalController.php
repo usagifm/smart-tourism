@@ -65,7 +65,7 @@ class RentalController extends Controller
 
 
         return response()->json(array(
-              "total_paid_rental" => count($rentalPaid),
+            //   "total_paid_rental" => count($rentalPaid),
                "waiting" => $rentalWaiting,
                "ongoing" => $rentalOngoing,
                "ended" => $rentalEnded,
