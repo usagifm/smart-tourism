@@ -108,8 +108,10 @@ class VehicleController extends Controller
 
         $totalVehicleByVehicleTypeId = Vehicle::where('vehicle_type_id', $id)->get()->count();
 
-        $vehiclesAvailableByVehicleTypesId = Vehicle::join('rentals', 'vehicles.id', '=', 'rentals.vehicle_id')
+        $vehiclesUsedeByVehicleTypesId = Vehicle::join('rentals', 'vehicles.id', '=', 'rentals.vehicle_id')
         ->where("vehicle_type_id", $id)->where('rentals.status', '=', 'ongoing')->get()->count();
+
+        $available = $totalVehicleByVehicleTypeId - $vehiclesUsedeByVehicleTypesId;
 
         // if(!$vehiclesAvailableByVehicleTypesId){
         //     return response()->json(array(
@@ -120,7 +122,7 @@ class VehicleController extends Controller
         return response()->json(array(
                 'detail' => $vehicleTypeDetail,
                 'total_vehicle' => $totalVehicleByVehicleTypeId,
-                'available_vehicle'=> $vehiclesAvailableByVehicleTypesId,
+                'available_vehicle'=> $available,
         )
 
     );
