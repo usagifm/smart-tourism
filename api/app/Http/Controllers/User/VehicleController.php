@@ -112,7 +112,7 @@ class VehicleController extends Controller
         // };
 
         return response()->json(array(
-                $vehicleTypeDetail,
+                'detail' => $vehicleTypeDetail,
                 'total_vehicle' => $totalVehicleByVehicleTypeId,
                 'available_vehicle'=> $vehiclesAvailableByVehicleTypesId,
         )
