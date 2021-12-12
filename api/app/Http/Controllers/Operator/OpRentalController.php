@@ -152,7 +152,7 @@ class OpRentalController extends Controller
         $invoice->is_paid     =  0;
         $invoice->save();
 
-        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArra();
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArray();
 
 
         // Http::withHeaders([
