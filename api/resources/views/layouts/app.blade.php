@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="Mehrdad Amini">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="author" content="Institut Teknologi Sumatera">
+    <link rel="icon" href="{{ asset('images/logo_tubaba.png') }}" type="image/x-icon">
+    <title>@yield('title')</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Custom fonts for this template-->
@@ -48,15 +49,26 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+                        <div class="my-auto">
+                            <img src="{{ asset('images/logo_tubaba.png') }}" height="35" width="35"
+                                class="mr-3" alt="">
+                            <img src="{{ asset('images/dikominfo_Tubaba.png') }}" height="35" width="70"
+                                class="mr-3" alt="">
+                            <img src="{{ asset('images/dishub.png') }}" height="35" width="35" class="mr-3"
+                                alt="">
+                            <img src="{{ asset('images/itera.png') }}" height="35" width="35" class="mr-1"
+                                alt="">
+                        </div>
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name
-                                    }}</span>
-                                <img class="img-profile rounded-circle" src="{{ asset('images/undraw_profile.svg') }}">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    {{ Auth::guard('admin')->user()->name }}</span>
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -66,7 +78,8 @@
                                     {{ __('Profile') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logoutModal" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="logoutModal" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     {{ __('Logout') }}
                                 </a>
@@ -77,6 +90,7 @@
 
                 </nav>
                 <!-- End of Topbar -->
+
                 @yield('content')
             </div>
             <!-- End of Main Content -->
