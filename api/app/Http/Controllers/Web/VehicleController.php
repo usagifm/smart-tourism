@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleStoreRequest;
 use App\Models\RentArea;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
 
 class VehicleController extends Controller
 {
@@ -17,6 +20,14 @@ class VehicleController extends Controller
         return view('vehicles.index', compact('vehicles'));
     }
 
+    public function download(Vehicle $vehicle)
+    {
+        $vehicle->load('vehicleType');
+
+        $pdf = PDF::loadview('vehicles.qrcode', ['vehicle' => $vehicle]);
+
+        return $pdf->download('QR Code ' . $vehicle->serial_number . '.pdf');
+    }
 
     public function create()
     {
@@ -29,7 +40,12 @@ class VehicleController extends Controller
 
     public function store(VehicleStoreRequest $request)
     {
-        Vehicle::create($request->validated());
+        $vehicle = Vehicle::create($request->validated());
+
+        QrCode::format('png')
+            ->size(800)
+            ->margin(5)
+            ->generate($vehicle->id, "../public/vehicle/{$vehicle->id}.png");
 
         return redirect()->route('vehicles.index');
     }
