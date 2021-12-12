@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\Rental;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\VehicleTrackHistory;
+use App\Http\Controllers\Controller;
 
 class RentalController extends Controller
 {
@@ -23,9 +24,26 @@ class RentalController extends Controller
         if($rental->status == "ongoing"){
             $location = VehicleTrackHistory::where("vehicle_id", $rental->vehicle_id)->latest()->first();
         };
+
+
+
+        if($rental->status == 'ongoing'){
+            $now = Carbon::now()->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $duration = Floor(($now - $startTime)/60);
+
+            return response()->json(array(
+                'rental'=> $rental,
+                'duration' => $duration,
+                'location' => $location
+            ));
+
+        }
         return response()->json(array(
-                $rental,
-                $location
+            'rental'=> $rental,
+            'location' => $location
         ));
 
     }
@@ -40,12 +58,18 @@ class RentalController extends Controller
 
         $rentalEnded = Rental::where("user_id" , $request->user()->id)->where("status", "ended")->with(['vehicle', 'invoice'])
         ->get();
+        $rentalPaid = Rental::where("user_id" , $request->user()->id)->where("status", "paid")->with(['vehicle', 'invoice'])
+        ->get();
+
+        // $totalPaidRental = Rental::where("user_id", $request->user()->id)->where("status", "paid")->count();
 
 
         return response()->json(array(
+              "total_paid_rental" => count($rentalPaid),
                "waiting" => $rentalWaiting,
                "ongoing" => $rentalOngoing,
                "ended" => $rentalEnded,
+               "paid" => $rentalPaid
 
         ));
 

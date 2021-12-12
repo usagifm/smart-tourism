@@ -31,7 +31,10 @@ class User extends Authenticatable
     }
 
 
-
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
 
 
     /**
@@ -44,7 +47,8 @@ class User extends Authenticatable
         'email',
         'password',
         'nik',
-        'phone'
+        'phone',
+        'fcm_registration_id'
     ];
 
     /**

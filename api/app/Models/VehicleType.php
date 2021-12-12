@@ -10,9 +10,15 @@ class VehicleType extends Model
     use HasFactory;
 
     public function vehicle() {
-        return $this->hasMany(Vehicle::class, 'vehicle_type_id');
+        return $this->hasMany(Vehicle::class, 'vehicle_type_id')->with(['ongoingRental','rentArea']);
     }
 
+
+
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
 
     protected $fillable = [
         'type',

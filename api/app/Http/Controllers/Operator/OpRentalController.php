@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Operator;
 
+use DateTime;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Rental;
+use App\Models\invoice;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\invoice;
-use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
 class OpRentalController extends Controller
@@ -16,16 +17,46 @@ class OpRentalController extends Controller
 
 {
 
+    function time_elapsed_string($datetime, $full = false) {
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+
+
     public function getAllRental(Request $request){
-        $rentalWaiting = Rental::where("status", "waiting")->with(['vehicle', 'user'])
+        $rentalWaiting = Rental::where("status", "waiting")->whereDate("created_at", Carbon::today())->with(['vehicle', 'user'])
         ->get();
 
-        $rentalOngoing = Rental::where("status", "ongoing")->with(['vehicle', 'invoice','user'])
+        $rentalOngoing = Rental::where("status", "ongoing")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
         ->get();
 
-        $rentalEnded = Rental::where("status", "ended")->with(['vehicle', 'invoice','user'])
+        $rentalEnded = Rental::where("status", "ended")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
         ->get();
-        $rentalPaid = Rental::where("status", "paid")->with(['vehicle', 'invoice','user'])
+        $rentalPaid = Rental::where("status", "paid")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
         ->get();
 
 
@@ -54,14 +85,30 @@ class OpRentalController extends Controller
 
         };
 
+        $min = null;
+        $sec = null;
+        $duration = null;
+        $now = null;
+        $startTime = null;
+
+        if($rental->status == 'ongoing'){
+            $now = Carbon::now()->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $min = Floor(($now - $startTime)/60);
+
+            return response()->json(array(
+                'rental'=> $rental,
+                'duration' => $min,
+            ));
+
+        }
 
 
-
-
-        return response()->json(
-                $rental
-        );
-
+        return response()->json(array(
+            'rental'=> $rental
+        ));
     }
 
 
@@ -105,7 +152,7 @@ class OpRentalController extends Controller
         $invoice->is_paid     =  0;
         $invoice->save();
 
-        $user = User::find($rental->user_id);
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArra();
 
 
         // Http::withHeaders([
@@ -118,35 +165,23 @@ class OpRentalController extends Controller
         //      }`
         // ]);
 
+        if ($tokens != null){
+            $data = [
+                "registration_ids" => $tokens,
+                "notification" => [
+                    "title" => "Hore ! Pesanan sewa kendaraan anda di setujui !",
+                    "body" => "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara",
+                    "icon" => "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lambang_Kabupaten_Tulang_Bawang_Barat.png/640px-Lambang_Kabupaten_Tulang_Bawang_Barat.png",
+                ],
+                "data" => [
+                    "rental" => $rental
+                ]
+            ];
 
+            $encodedData = json_encode($data);
 
-        // $curl = curl_init();
-        // $authKey = "key=". env('FCM_SERVER_KEY');
-        // $registration_ids = [$user->fcm_registration_id];
-        // curl_setopt_array($curl, array(
-        // CURLOPT_URL => "https://fcm.googleapis.com/fcm/send",
-        // CURLOPT_RETURNTRANSFER => true,
-        // CURLOPT_ENCODING => "",
-        // CURLOPT_MAXREDIRS => 10,
-        // CURLOPT_TIMEOUT => 30,
-        // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        // CURLOPT_CUSTOMREQUEST => "POST",
-        // CURLOPT_POSTFIELDS => '{
-        //                 "registration_ids": ' . $registration_ids . ',
-        //                 "notification": {
-        //                     "title": "Hore ! Pesanan sewa kendaraan anda di setujui !",
-        //                     "body": "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara"
-        //                 }
-        //             }',
-        // CURLOPT_HTTPHEADER => array(
-        //     "Authorization: " . $authKey,
-        //     "Content-Type: application/json",
-        //     "cache-control: no-cache"
-        // ),
-        // ));
-
-        // curl_exec($curl);
-
+            $this->sendNotification($encodedData);
+        }
 
         return response()->json(
         $rental

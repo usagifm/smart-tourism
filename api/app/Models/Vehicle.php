@@ -10,6 +10,11 @@ class Vehicle extends Model
 {
     use HasFactory;
 
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
+
     protected $guarded= ['id'];
 
     public function vehicleType() {

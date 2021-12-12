@@ -53,6 +53,9 @@ Route::group(['prefix' => 'user'], function () {
             Route::post('/{id}/rent', [VehicleController::class, 'rentVehicle']);
             Route::get('/rental/all', [RentalController::class, 'getAllRental']);
             Route::get('/{vehicle_id}/rental/{id}', [RentalController::class, 'getRentalDetail']);
+            Route::get('/vehicle-type/{id}', [VehicleController::class, 'getVehicleTypeAvailable']);
+
+
         });
 
     });

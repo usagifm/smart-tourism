@@ -13,11 +13,16 @@ class Operator extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    protected function serializeDate(\DateTimeInterface $date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
 
     /**
      * The attributes that should be hidden for serialization.

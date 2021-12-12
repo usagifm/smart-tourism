@@ -16,4 +16,9 @@ class invoice extends Model
         'is_paid',
         'total_charge'
     ];
+
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }
