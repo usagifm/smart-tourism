@@ -9,21 +9,32 @@ class Rental extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'vehicle_id',
+        'user_id',
+        'operator_id',
+        'date_time_start',
+        'date_time_end',
+        'status'
+    ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 
-    public function vehicle() {
+    public function vehicle()
+    {
         return $this->belongsTo(Vehicle::class, 'vehicle_id')->with(['vehiclePosition']);
     }
 
-    public function invoice() {
+    public function invoice()
+    {
         return $this->hasOne(invoice::class, 'rental_id');
     }
 
-    public function vehiclePosition() {
+    public function vehiclePosition()
+    {
         return $this->hasOne(VehicleTrackHistory::class, 'vehicle_id')->latest('created_at');
     }
-
 }

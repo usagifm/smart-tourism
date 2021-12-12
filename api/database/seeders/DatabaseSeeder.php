@@ -60,5 +60,9 @@ class DatabaseSeeder extends Seeder
         foreach ($rentAreas as $rentArea) {
             RentArea::create($rentArea);
         }
+
+        $this->call(AdminSeeder::class);
+        $this->call(PermissionSeeder::class);
+        $this->call(InvoiceSeeder::class);
     }
 }
