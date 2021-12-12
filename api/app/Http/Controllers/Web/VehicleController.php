@@ -8,13 +8,17 @@ use App\Models\RentArea;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
+use Symfony\Component\HttpFoundation\Response;
 
 class VehicleController extends Controller
 {
     public function index()
     {
+        abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicles = Vehicle::all();
 
         return view('vehicles.index', compact('vehicles'));
@@ -22,6 +26,8 @@ class VehicleController extends Controller
 
     public function download(Vehicle $vehicle)
     {
+        abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicle->load('vehicleType');
 
         $pdf = PDF::loadview('vehicles.qrcode', ['vehicle' => $vehicle]);
@@ -31,6 +37,8 @@ class VehicleController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicleTypes = VehicleType::all();
         $rentAreas = RentArea::all();
 
@@ -52,6 +60,8 @@ class VehicleController extends Controller
 
     public function edit(Vehicle $vehicle)
     {
+        abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicleTypes = VehicleType::all();
         $rentAreas = RentArea::all();
 
@@ -67,6 +77,8 @@ class VehicleController extends Controller
 
     public function destroy(Vehicle $vehicle)
     {
+        abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicle->delete();
 
         return redirect()->route('vehicles.index');

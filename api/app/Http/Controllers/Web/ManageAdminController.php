@@ -8,11 +8,15 @@ use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ManageAdminController extends Controller
 {
     public function index()
     {
+        abort_if(Gate::denies('manage_admin'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $admins = Admin::with('permissions')->get();
 
         return view('admin.index', compact('admins'));
@@ -20,6 +24,8 @@ class ManageAdminController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('manage_admin'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $permissions = Permission::all()->pluck('name', 'id');
 
         return view('admin.create', compact('permissions'));
@@ -38,6 +44,8 @@ class ManageAdminController extends Controller
 
     public function edit(Admin $admin)
     {
+        abort_if(Gate::denies('manage_admin'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $permissions = Permission::all()->pluck('name', 'id');
 
         return view('admin.edit', compact('admin', 'permissions'));
@@ -56,6 +64,8 @@ class ManageAdminController extends Controller
 
     public function destroy(Admin $admin)
     {
+        abort_if(Gate::denies('manage_admin'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $admin->delete();
 
         return redirect()->route('admin.index');

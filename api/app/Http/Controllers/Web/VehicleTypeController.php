@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleTypeStoreRequest;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class VehicleTypeController extends Controller
 {
     public function index()
     {
+        abort_if(Gate::denies('manage_type_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicleTypes = VehicleType::all();
 
         return view('vehicleType.index', compact('vehicleTypes'));
@@ -18,6 +22,8 @@ class VehicleTypeController extends Controller
 
     public function create()
     {
+        abort_if(Gate::denies('manage_type_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('vehicleType.create');
     }
 
@@ -30,6 +36,8 @@ class VehicleTypeController extends Controller
 
     public function edit(VehicleType $vehicleType)
     {
+        abort_if(Gate::denies('manage_type_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('vehicleType.edit', compact('vehicleType'));
     }
 
@@ -42,6 +50,8 @@ class VehicleTypeController extends Controller
 
     public function destroy(VehicleType $vehicleType)
     {
+        abort_if(Gate::denies('manage_type_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         $vehicleType->delete();
 
         return redirect()->route('vehicleType.index');
