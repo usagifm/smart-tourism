@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Statistik - Smart Tourism
+    Statistik Pendapatan - Smart Tourism
 @endsection
 
 @section('custom_styles')
@@ -13,7 +13,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Analisis</h1>
+            <h1 class="h3 mb-0 text-gray-800">Grafik Pendapatan</h1>
         </div>
 
         <div class="row">
@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-header">
-                            <h6 class="font-weight-bold text-danger">Grafik Keuangan</h6>
+                            <h6 class="font-weight-bold text-danger">Grafik Pendapatan</h6>
                         </div>
                     </div>
                     <div class="card-body">
