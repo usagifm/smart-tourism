@@ -12,10 +12,24 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_SUPERADMIN = 1;
+    const ROLE_DISPORA = 2;
+    const ROLE_DISHUB = 3;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role'
+    ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
 }
