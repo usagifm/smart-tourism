@@ -7,12 +7,16 @@
     "require": {
         "php": "^7.3|^8.0",
         "alexpechkarev/google-maps": "^8.0",
+        "barryvdh/laravel-debugbar": "^3.6",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3"
+        "laravel/ui": "^3.3",
+        "laraveldaily/laravel-charts": "^0.1.27",
+        "simplesoftwareio/simple-qrcode": "~4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
