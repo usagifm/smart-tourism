@@ -55,8 +55,6 @@ class VehicleRentalController extends Controller
             $rentArea = RentArea::find($vehicle->rent_area_id);
 
             //          $geoDB = Http::get('https://geolocation-db.com/json')->json();
-
-
             // $track = new VehicleTrackHistory;
             // $track->vehicle_id   =  $id;
             // $track->lat     =  $geolocate['location']['lat'];
@@ -97,7 +95,6 @@ class VehicleRentalController extends Controller
         return response()->json(array(
                 "message" => "Data saved ! ",
         ));
-
     }
 
     public function googleMaps(){
