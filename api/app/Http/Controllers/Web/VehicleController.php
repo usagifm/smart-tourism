@@ -13,6 +13,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class VehicleController extends Controller
 {
     public function index()
@@ -31,6 +32,13 @@ class VehicleController extends Controller
         $vehicle->load('vehicleType');
 
         $pdf = PDF::loadview('vehicles.qrcode', ['vehicle' => $vehicle]);
+
+        if (!file_exists(public_path("vehicle/{$vehicle->id}.png"))) {
+            QrCode::format('png')
+                ->size(800)
+                ->margin(5)
+                ->generate($vehicle->id, "../public/vehicle/{$vehicle->id}.png");
+        }
 
         return $pdf->download('QR Code ' . $vehicle->serial_number . '.pdf');
     }
