@@ -99,8 +99,8 @@ class OpRentalController extends Controller
             $min = Floor(($now - $startTime)/60);
 
             return response()->json(array(
-                'rental'=> $rental,
                 'duration' => $min,
+                'rental'=> $rental,
             ));
 
         }
