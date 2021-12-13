@@ -89,17 +89,31 @@ class OpRentalController extends Controller
         $sec = null;
         $duration = null;
         $now = null;
-        $startTime = null;
 
-        if($rental->status == 'ongoing' || $rental->status == 'paid'){
+        if($rental->status == 'ongoing'){
             $now = Carbon::now()->timestamp;
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
 
-            $min = Floor(($now - $startTime)/60);
+            $duration = Floor(($now - $startTime)/60);
 
             return response()->json(array(
-                'duration' => $min,
+                'duration' => $duration,
+                'rental'=> $rental,
+            ));
+
+        }
+
+        if($rental->status == 'paid'){
+            $endTime = $rental->date_time_end;
+            $endTime = Carbon::parse($endTime)->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $duration = Floor(($endTime - $startTime)/60);
+
+            return response()->json(array(
+                'duration' => $duration,
                 'rental'=> $rental,
             ));
 
