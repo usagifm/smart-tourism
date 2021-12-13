@@ -41,6 +41,23 @@ class RentalController extends Controller
             ));
 
         }
+
+        if($rental->status == 'paid' || $rental->status == 'ended'){
+            $endTime = $rental->date_time_end;
+            $endTime = Carbon::parse($endTime)->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $duration = Floor(($endTime - $startTime)/60);
+
+            return response()->json(array(
+                'rental'=> $rental,
+                'duration' => $duration,
+                'location' => $location
+            ));
+
+        }
+
         return response()->json(array(
             'rental'=> $rental,
             'location' => $location
@@ -65,7 +82,7 @@ class RentalController extends Controller
 
 
         return response()->json(array(
-              "total_paid_rental" => count($rentalPaid),
+            //   "total_paid_rental" => count($rentalPaid),
                "waiting" => $rentalWaiting,
                "ongoing" => $rentalOngoing,
                "ended" => $rentalEnded,

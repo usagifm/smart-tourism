@@ -98,22 +98,36 @@ class VehicleController extends Controller
 
 
     public function getVehicleTypeAvailable($id){
+        $vehicleTypeDetail = VehicleType::where('id', $id)->first();
 
-        $vehicleType = VehicleType::where("id", $id)->with(['vehicle'])->first();
+        if(!$vehicleTypeDetail)
+        return response()->json(array(
+            'message'   =>  "Data tipe kendaraan tidak ditemukan !"
+        ), 483);
 
 
-        if(!$vehicleType){
-            return response()->json(array(
-                'message'   =>  "Data Kendaraan tidak ditemukan!"
-            ), 483);
+        $totalVehicleByVehicleTypeId = Vehicle::where('vehicle_type_id', $id)->get()->count();
 
-        };
+        $vehiclesUsedeByVehicleTypesId = Vehicle::join('rentals', 'vehicles.id', '=', 'rentals.vehicle_id')
+        ->where("vehicle_type_id", $id)->where('rentals.status', '=', 'ongoing')->get()->count();
 
-        return response()->json(
-                $vehicleType
-        );
+        $available = $totalVehicleByVehicleTypeId - $vehiclesUsedeByVehicleTypesId;
 
-    }
+        // if(!$vehiclesAvailableByVehicleTypesId){
+        //     return response()->json(array(
+        //         'message'   =>  "Data Kendaraan tidak ditemukan!"
+        //     ), 483);
+        // };
+
+        return response()->json(array(
+                'detail' => $vehicleTypeDetail,
+                'total_vehicle' => $totalVehicleByVehicleTypeId,
+                'available_vehicle'=> $available,
+        )
+
+    );
+
+}
 
 
 

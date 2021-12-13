@@ -89,18 +89,32 @@ class OpRentalController extends Controller
         $sec = null;
         $duration = null;
         $now = null;
-        $startTime = null;
 
         if($rental->status == 'ongoing'){
             $now = Carbon::now()->timestamp;
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
 
-            $min = Floor(($now - $startTime)/60);
+            $duration = Floor(($now - $startTime)/60);
 
             return response()->json(array(
+                'duration' => $duration,
                 'rental'=> $rental,
-                'duration' => $min,
+            ));
+
+        }
+
+        if($rental->status == 'paid' || $rental->status == 'ended'){
+            $endTime = $rental->date_time_end;
+            $endTime = Carbon::parse($endTime)->timestamp;
+            $startTime = $rental->date_time_start;
+            $startTime = Carbon::parse($startTime)->timestamp;
+
+            $duration = Floor(($endTime - $startTime)/60);
+
+            return response()->json(array(
+                'duration' => $duration,
+                'rental'=> $rental,
             ));
 
         }
@@ -152,7 +166,7 @@ class OpRentalController extends Controller
         $invoice->is_paid     =  0;
         $invoice->save();
 
-        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArra();
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArray();
 
 
         // Http::withHeaders([
