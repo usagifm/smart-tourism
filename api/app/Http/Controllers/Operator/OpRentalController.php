@@ -104,7 +104,7 @@ class OpRentalController extends Controller
 
         }
 
-        if($rental->status == 'paid'){
+        if($rental->status == 'paid' || $rental->status == 'ended'){
             $endTime = $rental->date_time_end;
             $endTime = Carbon::parse($endTime)->timestamp;
             $startTime = $rental->date_time_start;
