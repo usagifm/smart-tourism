@@ -37,7 +37,7 @@ class VehicleController extends Controller
             QrCode::format('png')
                 ->size(800)
                 ->margin(5)
-                ->generate($vehicle->id, "../public/vehicle/{$vehicle->id}.png");
+                ->generate($vehicle->id, public_path("vehicle/{$vehicle->id}.png"));
         }
 
         return $pdf->download('QR Code ' . $vehicle->serial_number . '.pdf');
@@ -61,7 +61,7 @@ class VehicleController extends Controller
         QrCode::format('png')
             ->size(800)
             ->margin(5)
-            ->generate($vehicle->id, "../public/vehicle/{$vehicle->id}.png");
+            ->generate($vehicle->id, public_path("vehicle/{$vehicle->id}.png"));
 
         return redirect()->route('vehicles.index');
     }
