@@ -4,7 +4,7 @@
     Admin - Smart Tourism
 @endsection
 
-@dd($vehicles)
+
 @section('custom_styles')
     <link rel="stylesheet" href="{{ asset('css/table/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/table/responsive.bootstrap4.min.css') }}">

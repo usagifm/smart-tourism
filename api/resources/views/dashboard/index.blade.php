@@ -4,6 +4,8 @@
     Dashboard - Smart Tourism
 @endsection
 
+@dd($vehicles)
+
 @section('custom_styles')
     <style>
         #map {
