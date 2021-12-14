@@ -4,7 +4,7 @@
     Dashboard - Smart Tourism
 @endsection
 
-@dd($vehicles)
+{{-- @dd($vehicles) --}}
 
 @section('custom_styles')
     <style>
