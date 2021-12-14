@@ -34,7 +34,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware('auth:admin')->group(function () {
-    Route::get('admin/dashboard', DashboardController::class)->name('admin.dashboard');
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
