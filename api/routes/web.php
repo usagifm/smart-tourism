@@ -59,7 +59,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('manage/user/{user}',               [ManageUserController::class, 'resetToken'])->name('manage.user.resetToken');
 
     Route::get('manage/operator',                   [ManageOperatorController::class, 'index'])->name('manage.operator.index');
-    Route::get('manage/operator/{operator}',        [ManageOperatorController::class, 'resetToken'])->name('manage.operator.resetToken');
+    Route::post('manage/operator/{operator}',        [ManageOperatorController::class, 'resetToken'])->name('manage.operator.resetToken');
 
     Route::resource('manage/admin',     ManageAdminController::class)
         ->except(['show'])
