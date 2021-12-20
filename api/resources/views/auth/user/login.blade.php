@@ -23,9 +23,9 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">{{ __('Welcome Back!') }}</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Smart Tourism Tubaba</h1>
                                 </div>
-                                <form action="{{ route('login.post') }}" method="post" class="user">
+                                <form action="{{ route('login.user.post') }}" method="post" class="user">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email" name="email" value="{{ old('email') }}"
@@ -54,10 +54,17 @@
                                     </button>
                                 </form>
                                 <hr>
-                                @if (Route::has('login.user'))
+                                @if (Route::has('register.user'))
                                     <div class="text-center">
-                                        <a class="small" href="{{ route('login.user') }}">
-                                            Login User</a>
+                                        Belum punya akun?<a class="small" href="{{ route('register.user') }}">
+                                            Daftar</a>
+                                    </div>
+                                @endif
+                                <hr>
+                                @if (Route::has('login'))
+                                    <div class="text-center">
+                                        <a class="small" href="{{ route('login') }}">
+                                            Login Admin</a>
                                     </div>
                                 @endif
                             </div>
