@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "laraveldaily/laravel-charts": "^0.1.27",
+        "laraveldaily/laravel-invoices": "^2.0",
         "simplesoftwareio/simple-qrcode": "~4"
     },
     "require-dev": {
