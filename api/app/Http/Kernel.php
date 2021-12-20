@@ -40,7 +40,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            AuthGatesMiddleware::class
         ],
 
         'api' => [
@@ -72,5 +71,6 @@ class Kernel extends HttpKernel
         'checkoperator' => \App\Http\Middleware\CheckOperator::class,
         'checkuser' => \App\Http\Middleware\CheckUser::class,
         'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
+        'admin' => AuthGatesMiddleware::class
     ];
 }
