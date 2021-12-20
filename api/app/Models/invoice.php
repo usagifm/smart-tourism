@@ -21,4 +21,9 @@ class invoice extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function rental()
+    {
+        return $this->belongsTo(Rental::class, 'rental_id');
+    }
 }
