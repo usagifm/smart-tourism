@@ -7,6 +7,7 @@ use App\Models\Rental;
 use Illuminate\Http\Request;
 use App\Models\VehicleTrackHistory;
 use App\Http\Controllers\Controller;
+use App\Models\Vehicle;
 
 class RentalController extends Controller
 {
@@ -31,13 +32,14 @@ class RentalController extends Controller
             $now = Carbon::now()->timestamp;
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
-
             $duration = Floor(($now - $startTime)/60);
-
+            $cost = ceil(($now - $startTime)/1800);
+            $vehicle = Vehicle::where("id", $vehicle_id)->first();
             return response()->json(array(
                 'rental'=> $rental,
                 'duration' => $duration,
-                'location' => $location
+                'location' => $location,
+                'cost' => $cost*$vehicle->fare
             ));
 
         }
@@ -47,7 +49,6 @@ class RentalController extends Controller
             $endTime = Carbon::parse($endTime)->timestamp;
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
-
             $duration = Floor(($endTime - $startTime)/60);
 
             return response()->json(array(

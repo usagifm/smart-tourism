@@ -94,12 +94,14 @@ class OpRentalController extends Controller
             $now = Carbon::now()->timestamp;
             $startTime = $rental->date_time_start;
             $startTime = Carbon::parse($startTime)->timestamp;
-
+            $vehicle = Vehicle::where("id", $vehicle_id)->first();
             $duration = Floor(($now - $startTime)/60);
+            $cost = ceil(($now - $startTime)/1800);
 
             return response()->json(array(
                 'duration' => $duration,
                 'rental'=> $rental,
+                'cost'=> $cost*$vehicle->fare
             ));
 
         }
@@ -252,11 +254,11 @@ class OpRentalController extends Controller
 
 
 
-        $totalTimeInMinutes = ($endTime - $startTime)/60;
+        $totalTimeIn30Minutes = ceil(($endTime - $startTime)/1800);
 
         $vehicle = Vehicle::find($rental->vehicle_id);
 
-        $totalCharge = $totalTimeInMinutes * $vehicle->fare;
+        $totalCharge = $totalTimeIn30Minutes * $vehicle->fare;
 
 
         $invoice = invoice::where("user_id",$rental->user_id)->where("rental_id",  $rental->id)->first();
