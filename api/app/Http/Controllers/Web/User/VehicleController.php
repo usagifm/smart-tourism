@@ -8,6 +8,7 @@ use App\Http\Requests\User\VehicleRentRequest;
 use App\Models\invoice;
 use App\Models\Rental;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Invoice as InvoicesPdf;
 
@@ -42,7 +43,32 @@ class VehicleController extends Controller
             })
             ->get();
 
-        return view('user.dashboard', compact('vehicles', 'rentals'));
+        $rentals->transform(function ($item) {
+            $item->price = 0;
+            $item->total_time = 0;
+
+            if ($item->status == 'ongoing') {
+                $item->total_time = Carbon::parse($item->date_time_start)->diffInMinutes(now()->setTimezone('Asia/Jakarta')->toDateTimeString());
+                $item->price = ceil($item->total_time / 30) * $item->vehicle->fare;
+            } else if ($item->status == 'ended') {
+                $item->total_time = Carbon::parse($item->date_time_start)->diffInMinutes($item->date_time_end);
+                $item->price = ceil($item->total_time / 30) * $item->vehicle->fare;
+            }
+
+            return $item;
+        });
+
+        $countVehicle = Rental::where('user_id', auth()->id())
+            ->get();
+
+        $countVehicle = [
+            'waiting' => $countVehicle->where('status', 'waiting')->count(),
+            'ongoing' => $countVehicle->where('status', 'ongoing')->count(),
+            'ended' => $countVehicle->where('status', 'ended')->count(),
+            'paid' => $countVehicle->where('status', 'paid')->count()
+        ];
+
+        return view('user.dashboard', compact('vehicles', 'rentals', 'countVehicle'));
     }
 
     public function store(VehicleRentRequest $vehicleRentRequest)
