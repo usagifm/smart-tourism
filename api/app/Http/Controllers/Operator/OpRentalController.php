@@ -48,13 +48,13 @@ class OpRentalController extends Controller
 
 
     public function getAllRental(Request $request){
-        $rentalWaiting = Rental::where("status", "waiting")->whereDate("created_at", Carbon::today())->with(['vehicle', 'user'])
+        $rentalWaiting = Rental::where("status", "waiting")->with(['vehicle', 'user'])
         ->get();
 
-        $rentalOngoing = Rental::where("status", "ongoing")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
+        $rentalOngoing = Rental::where("status", "ongoing")->with(['vehicle', 'invoice','user'])
         ->get();
 
-        $rentalEnded = Rental::where("status", "ended")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
+        $rentalEnded = Rental::where("status", "ended")->with(['vehicle', 'invoice','user'])
         ->get();
         $rentalPaid = Rental::where("status", "paid")->whereDate("created_at", Carbon::today())->with(['vehicle', 'invoice','user'])
         ->get();

@@ -17,14 +17,21 @@ class RegisterController extends Controller
             'password' => ['required', 'min:8', 'confirmed'],
             'nik' =>  'required|digits:16|numeric',
             'phone' => 'required|min:10|numeric',
+            'photo' => ['required']
         ]);
+
+        if($request->photo) {
+            $photo = $this->uploadImage($request->photo);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make(($request->password)),
             'nik' => $request->nik,
             'phone' => $request->phone,
-            'fcm_registration_id' => $request->fcm_registration_id
+            'fcm_registration_id' => $request->fcm_registration_id,
+            'photo' => $photo
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
