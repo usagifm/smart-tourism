@@ -48,7 +48,13 @@ class Controller extends BaseController
         $this->cloudinary->url->secure = true;
 
         $data = $file;
-        $cloudder = (new UploadApi())->upload($data);
+        $cloudder = (new UploadApi())->upload($data,[
+            'folder' => 'smart-tourism',
+            'transformation' => [
+                      'quality' => "auto",
+                      'fetch_format' => "auto"
+     ]
+]);
         $file_url = $cloudder["secure_url"];
         return $file_url;
     }
