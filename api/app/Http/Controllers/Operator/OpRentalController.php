@@ -170,25 +170,12 @@ class OpRentalController extends Controller
 
         $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArray();
 
-
-        // Http::withHeaders([
-        //     'Authorization' => 'key='+env('FCM_SERVER_KEY'),
-        // ])->post('https://fcm.googleapis.com/fcm/send', [
-        //     'registration_ids' => [$user->fcm_registration_id],
-        //     'notification' => `{
-        //         title : Hore ! Pesanan sewa kendaraan anda di setujui !,
-        //         body : Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara
-        //      }`
-        // ]);
-
         if ($tokens != null){
             $data = [
                 "registration_ids" => $tokens,
                 "notification" => [
                     "title" => "Hore ! Pesanan sewa kendaraan anda di setujui !",
-                    "body" => "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara",
-                    "icon" => "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lambang_Kabupaten_Tulang_Bawang_Barat.png/640px-Lambang_Kabupaten_Tulang_Bawang_Barat.png",
-                ],
+                    "body" => "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara"],
                 "data" => [
                     "rental" => $rental
                 ]
@@ -266,6 +253,24 @@ class OpRentalController extends Controller
         $invoice->total_charge    =  $totalCharge;
         $invoice->save();
 
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->first();
+
+        if ($tokens != null){
+            $data = [
+                "registration_ids" => $tokens->fcm_registration_id,
+                "notification" => [
+                    "title" => "Sewa anda telah diakhiri !",
+                    "body" => `Silahkan lakukan pembayaran kepada operator ya`,
+                                 ],
+                "data" => [
+                    "rental" => $rental
+                ]
+            ];
+
+            $encodedData = json_encode($data);
+
+            $this->sendNotification($encodedData);
+        }
 
 
         return response()->json(array(
@@ -296,6 +301,26 @@ class OpRentalController extends Controller
         $invoice->operator_id    = $request->user()->id;
         $invoice->is_paid        =  1;
         $invoice->save();
+
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->first();
+
+        if ($tokens != null){
+            $data = [
+                "registration_ids" => $tokens->fcm_registration_id,
+                "notification" => [
+                    "title" => "Sewa telah dibayar !",
+                    "body" => `Terimakasih ya {$tokens->name}, kami tunggu penyewaan anda yang selanjutnya.`,
+                                 ],
+                "data" => [
+                    "rental" => $rental
+                ]
+            ];
+
+            $encodedData = json_encode($data);
+
+            $this->sendNotification($encodedData);
+        }
+
 
         return response()->json(array(
             'message'   =>  "Rental telah dibayar!"
