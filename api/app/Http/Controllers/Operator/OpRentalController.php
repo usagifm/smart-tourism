@@ -177,7 +177,8 @@ class OpRentalController extends Controller
                     "title" => "Hore ! Pesanan sewa kendaraan anda di setujui !",
                     "body" => "Kami ingatkan bahwa jangan menggunakan kendaraan sewa diluar area peminjaman ya dan tetap berhati hati dalam berkendara"],
                 "data" => [
-                    "rental" => $rental
+                        "rental_id" => $rental->id,
+                        "vehicle_id" => $rental->vehicle_id,
                 ]
             ];
 
@@ -262,8 +263,9 @@ class OpRentalController extends Controller
                     "title" => "Sewa anda telah diakhiri !",
                     "body" => `Silahkan lakukan pembayaran kepada operator ya`,
                                  ],
-                "data" => [
-                    "rental" => $rental
+           "data" => [
+                    "rental_id" => $rental->id,
+                    "vehicle_id" => $rental->vehicle_id,
                 ]
             ];
 
@@ -311,8 +313,9 @@ class OpRentalController extends Controller
                     "title" => "Sewa telah dibayar !",
                     "body" => `Terimakasih ya {$tokens->name}, kami tunggu penyewaan anda yang selanjutnya.`,
                                  ],
-                "data" => [
-                    "rental" => $rental
+               "data" => [
+                    "rental_id" => $rental->id,
+                    "vehicle_id" => $rental->vehicle_id,
                 ]
             ];
 

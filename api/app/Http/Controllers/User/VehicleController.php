@@ -99,7 +99,8 @@ class VehicleController extends Controller
                     "title" => "Anda berhasil memesan penyewaan !",
                     "body" => "Silahkan hubungi operator kami untuk meminta persetujuan penyewaan ya"],
                 "data" => [
-                    "rental" => $rental
+                    "rental_id" => $rental->id,
+                    "vehicle_id" => $rental->vehicle_id,
                 ]
             ];
 
@@ -116,9 +117,10 @@ class VehicleController extends Controller
                 "notification" => [
                     "title" => "Pesanan baru telah di terima !",
                     "body" => "Silahkan konfirmasi kepada pengguna untuk persetujuan penyewaannya ya."],
-                "data" => [
-                    "rental" => $rental
-                ]
+                    "data" => [
+                        "rental_id" => $rental->id,
+                        "vehicle_id" => $rental->vehicle_id,
+                    ]
             ];
 
             $encodedData = json_encode($data);
