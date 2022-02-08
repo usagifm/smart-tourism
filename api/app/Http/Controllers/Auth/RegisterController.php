@@ -17,7 +17,7 @@ class RegisterController extends Controller
             'password' => ['required', 'min:8', 'confirmed'],
             'nik' =>  'required|digits:16|numeric',
             'phone' => 'required|min:10|numeric',
-            'photo' => ['required']
+            // 'photo' => ['required']
         ]);
 
         if($request->photo) {
