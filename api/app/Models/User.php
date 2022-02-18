@@ -53,7 +53,8 @@ class User extends Authenticatable
         'nik',
         'phone',
         'fcm_registration_id',
-        'ktp'
+        'ktp',
+        'photo'
     ];
 
     /**
@@ -64,6 +65,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'photo'
     ];
 
     /**

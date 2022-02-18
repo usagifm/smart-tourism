@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\User;
 use App\Models\Rental;
 use App\Models\invoice;
 use App\Models\Vehicle;
@@ -88,6 +89,44 @@ class VehicleController extends Controller
         $rental->user_id     =  $request->user()->id;
         $rental->status = "waiting";
         $rental->save();
+
+        $tokens = User::whereNotNull("fcm_registration_id")->where('id', $rental->user_id)->get()->pluck('fcm_registration_id')->toArray();
+
+        if ($tokens != null){
+            $data = [
+                "registration_ids" => $tokens,
+                "notification" => [
+                    "title" => "Anda berhasil memesan penyewaan !",
+                    "body" => "Silahkan hubungi operator kami untuk meminta persetujuan penyewaan ya"],
+                "data" => [
+                    "rental_id" => $rental->id,
+                    "vehicle_id" => $rental->vehicle_id,
+                ]
+            ];
+
+            $encodedData = json_encode($data);
+            $this->sendNotification($encodedData);
+        }
+
+        $tokenOperator = User::whereNotNull("fcm_registration_id")->get()->pluck('fcm_registration_id')->toArray();
+
+
+        if ($tokenOperator != null){
+            $data = [
+                "registration_ids" => $tokenOperator,
+                "notification" => [
+                    "title" => "Pesanan baru telah di terima !",
+                    "body" => "Silahkan konfirmasi kepada pengguna untuk persetujuan penyewaannya ya."],
+                    "data" => [
+                        "rental_id" => $rental->id,
+                        "vehicle_id" => $rental->vehicle_id,
+                    ]
+            ];
+
+            $encodedData = json_encode($data);
+            $this->sendNotification($encodedData);
+        }
+
 
 
         return response()->json(array(
