@@ -12,7 +12,8 @@
                 <h6 class="m-0 font-weight-bold text-danger">Ubah Kendaraan</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('vehicles.update', $vehicle) }}" method="POST" class="col-4 mx-auto">
+                <form action="{{ route('vehicles.update', $vehicle) }}" method="POST"
+                    class="col-sm-6 col-lg-4 col-md-6 mx-auto">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -87,7 +88,8 @@
                             <option value="1" {{ $vehicle->is_inside == '1' ? 'selected' : '' }}>Didalam</option>
                             <option value="2" {{ $vehicle->is_inside == '2' ? 'selected' : '' }}>Diluar</option>
                         </select>
-                        @error('is_inside')`
+                        @error('is_inside')
+                            `
                             <div class="alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -105,7 +107,7 @@
                             <div class="alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="submit" class="btn btn-danger float-right">Submit</button>
                 </form>
             </div>
         </div>

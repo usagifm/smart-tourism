@@ -50,6 +50,8 @@
                     <ul class="navbar-nav ml-auto">
 
                         <div class="my-auto">
+                            <img src="{{ asset('images/tubaba.png') }}" alt="" height="25" width="100"
+                                class="mr-3">
                             <img src="{{ asset('images/logo_tubaba.png') }}" height="35" width="35"
                                 class="mr-3" alt="">
                             <img src="{{ asset('images/dikominfo_Tubaba.png') }}" height="35" width="70"

@@ -26,6 +26,7 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Telepon</th>
+                                <th>KTP</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -36,6 +37,13 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
+                                    <td>
+                                        @if ($user->ktp)
+                                            <a href="{{ asset($user->ktp) }}" class="btn btn-sm btn-outline-info">KTP</a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($user->tokens()->count() > 0)
                                             <form action="{{ route('manage.user.resetToken', $user) }}" method="POST"

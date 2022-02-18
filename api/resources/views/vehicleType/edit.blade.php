@@ -12,7 +12,8 @@
                 <h6 class="m-0 font-weight-bold text-danger">Edit Tipe Kendaraan</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('vehicleType.update', $vehicleType) }}" method="POST" class="col-4 mx-auto">
+                <form action="{{ route('vehicleType.update', $vehicleType) }}" method="POST"
+                    class="col-sm-6 col-lg-4 col-md-6 mx-auto">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -31,7 +32,7 @@
                             <div class="alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="submit" class="btn btn-danger float-right">Submit</button>
                 </form>
             </div>
         </div>

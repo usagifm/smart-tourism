@@ -1,5 +1,7 @@
 @extends('layouts.customer')
 
+@section('title', 'Profile')
+
 @section('content')
     <!-- Main content -->
     <div class="content">

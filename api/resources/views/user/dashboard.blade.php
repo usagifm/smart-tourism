@@ -89,7 +89,8 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <form action="{{ route('vehicle.rent.post') }}" class="col-4 mx-auto" method="POST">
+                    <form action="{{ route('vehicle.rent.post') }}" class="col-sm-6 col-lg-6 col-md-4 mx-auto"
+                        method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="vehicle_id">Kendaraan</label>
@@ -145,7 +146,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">Tidak ada data</td>
+                                    <td colspan="8">Tidak ada data</td>
                                 </tr>
                             @endforelse
                         </tbody>
