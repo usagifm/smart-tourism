@@ -14,27 +14,31 @@ class User extends Authenticatable
 
 
 
-    public function waiting_rental() {
+    public function waiting_rental()
+    {
         return $this->hasMany(Rental::class, 'user_id')->where("status", "waiting");
     }
 
-    public function ongoing_rental() {
+    public function ongoing_rental()
+    {
         return $this->hasMany(Rental::class, 'user_id')->where("status", "ongoing");
     }
 
-    public function ended_rental() {
+    public function ended_rental()
+    {
         return $this->hasMany(Rental::class, 'user_id')->where("status", "ended");
     }
 
-    public function paid_rental() {
+    public function paid_rental()
+    {
         return $this->hasMany(Rental::class, 'user_id')->where("status", "paid");
     }
 
 
     protected function serializeDate(\DateTimeInterface $date)
-{
-    return $date->format('Y-m-d H:i:s');
-}
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
 
     /**
@@ -48,7 +52,8 @@ class User extends Authenticatable
         'password',
         'nik',
         'phone',
-        'fcm_registration_id'
+        'fcm_registration_id',
+        'ktp'
     ];
 
     /**
