@@ -53,7 +53,6 @@ class User extends Authenticatable
         'nik',
         'phone',
         'fcm_registration_id',
-        'ktp',
         'photo'
     ];
 

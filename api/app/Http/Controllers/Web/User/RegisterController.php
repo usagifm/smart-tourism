@@ -65,7 +65,7 @@ class RegisterController extends Controller
             $ktp = $request->file('ktp');
             $url = $ktp->move('images/ktp', $ktp->hashName());
             $user->update([
-                'ktp' => $url->getPath() . '/' . $url->getFilename()
+                'photo' => $url->getPath() . '/' . $url->getFilename()
             ]);
         }
 

@@ -38,8 +38,8 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>
-                                        @if ($user->ktp)
-                                            <a href="{{ asset($user->ktp) }}" class="btn btn-sm btn-outline-info">KTP</a>
+                                        @if ($user->photo)
+                                            <a href="{{ asset($user->photo) }}" class="btn btn-sm btn-outline-info">KTP</a>
                                         @else
                                             -
                                         @endif
