@@ -28,10 +28,18 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'nik' => ['required', 'digits:16',],
-            'phone' => ['required', 'digits_between:12,13',],
+            'phone' => ['required', 'digits_between:12,13'],
+            'ktp' => ['required', 'mimes:jpg,jpeg,png', 'file']
         ], [
+            '*.required' => 'Masukkan :attribute',
+            '*.string' => 'Masukkan :attribute',
+            'email.email' => 'Masukkan email dengan benar',
+            'email.unique' => 'Email telah digunakan',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Password tidak sesuai',
             'nik.digits' => 'Masukkan 16 digit NIK',
-            'phone.digits_between' => 'Masukkan nomor HP dengan benar'
+            'phone.digits_between' => 'Masukkan nomor HP 12-13 digit',
+            'ktp.mimes' => 'Masukkan file dengan format png, jpg atau jpeg.'
         ]);
     }
 
@@ -44,22 +52,25 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nik' => $request->nik,
+            'phone' => $request->phone,
+            'fcm_registration_id' => ''
+        ]);
+
+        if ($request->hasFile('ktp')) {
+            $ktp = $request->file('ktp');
+            $url = $ktp->move('images/ktp', $ktp->hashName());
+            $user->update([
+                'photo' => $url->getPath() . '/' . $url->getFilename()
+            ]);
+        }
 
         $this->guard()->login($user);
 
         return redirect($this->redirectPath());
-    }
-
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'nik' => $data['nik'],
-            'phone' => $data['phone'],
-            'fcm_registration_id' => ''
-        ]);
     }
 }

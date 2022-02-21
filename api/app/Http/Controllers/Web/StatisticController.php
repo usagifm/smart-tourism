@@ -26,7 +26,8 @@ class StatisticController extends Controller
             'chart_type' => 'line',
             'filter_field' => 'created_at',
             'filter_period' => $query == 'month' ? 'month' : 'year',
-            'chart_color' => '184, 4, 4',
+            'chart_color' => '112, 42, 45',
+            'continuous_time' => $query == 'month' ? true : false
         ];
 
         $chart = new LaravelChart($chart_options);
@@ -52,7 +53,8 @@ class StatisticController extends Controller
             'chart_type' => 'line',
             'filter_field' => 'created_at',
             'filter_period' => $query == 'month' ? 'month' : 'year',
-            'chart_color' => '184, 4, 4',
+            'chart_color' => '112, 42, 45',
+            'continuous_time' => $query == 'month' ? true : false
         ];
 
         $chart = new LaravelChart($chart_options);

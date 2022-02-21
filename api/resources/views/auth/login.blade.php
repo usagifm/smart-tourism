@@ -19,17 +19,24 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-img"></div>
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <div class="d-flex justify-content-between">
+                                <img src="{{ asset('images/logo_tubaba.png') }}" alt="" width="45px" height="60px"
+                                    class="m-2">
+                                <img src="{{ asset('images/TubabaPutih.png') }}" alt="" width="160px" height="90px"
+                                    class="m-2">
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">{{ __('Welcome Back!') }}</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">{{ __('Smart Tourism Tubaba') }}</h1>
                                 </div>
                                 <form action="{{ route('login.post') }}" method="post" class="user">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email" name="email" value="{{ old('email') }}"
-                                            class="form-control form-control-user @error('email') is-invalid @enderror"
+                                            class="form-control  @error('email') is-invalid @enderror"
                                             id="exampleInputEmail" aria-describedby="emailHelp"
                                             placeholder="{{ __('Enter Email Address') }}" required autofocus>
                                     </div>
@@ -41,7 +48,7 @@
 
                                     <div class="form-group">
                                         <input type="password" name="password"
-                                            class="form-control form-control-user @error('password') is-invalid @enderror"
+                                            class="form-control  @error('password') is-invalid @enderror"
                                             id="exampleInputPassword" placeholder="{{ __('Password') }}" required>
                                     </div>
                                     @error('password')

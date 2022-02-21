@@ -3,7 +3,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-        <img src="{{ asset('images/TubabaPutih.png') }}" alt="" srcset="" width="180">
+        <img src="{{ asset('images/logo.png') }}" alt="" srcset="" width="60" height="60">
     </a>
 
     <!-- Divider -->

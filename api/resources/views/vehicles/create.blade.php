@@ -12,7 +12,7 @@
                 <h6 class="m-0 font-weight-bold text-danger">Tambah Kendaraan</h6>
             </div>
             <div class="card-body">
-                <form action="{{ route('vehicles.store') }}" method="POST" class="col-4 mx-auto">
+                <form action="{{ route('vehicles.store') }}" method="POST" class="col-sm-6 col-lg-4 col-md-6 mx-auto">
                     @csrf
                     <div class="form-group">
                         <label for="vehicle_type_id">Status</label>
@@ -104,7 +104,7 @@
                             <div class="alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button type="submit" class="btn btn-danger float-right">Submit</button>
                 </form>
             </div>
         </div>

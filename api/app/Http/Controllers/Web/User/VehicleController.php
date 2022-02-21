@@ -93,6 +93,8 @@ class VehicleController extends Controller
 
     public function invoices(invoice $invoice)
     {
+        abort_if(auth()->id() != $invoice->user_id, 403, 'This invoice is not belong to you.');
+
         $invoice->load(['rental.vehicle.rentArea', 'rental.vehicle.vehicleType']);
 
         $customer = new Buyer([
@@ -123,6 +125,6 @@ class VehicleController extends Controller
             ->logo(public_path('images/logo_tubaba.png'))
             ->filename('Invoice');
 
-        return $invoice->download();
+        return $invoice->stream();
     }
 }
