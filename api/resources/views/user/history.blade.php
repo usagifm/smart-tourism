@@ -77,11 +77,11 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                "buttons": ['copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5', "colvis"
-                ]
+                // "buttons": ['copyHtml5',
+                //     'excelHtml5',
+                //     'csvHtml5',
+                //     'pdfHtml5', "colvis"
+                // ]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>

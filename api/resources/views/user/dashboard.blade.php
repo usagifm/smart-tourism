@@ -88,26 +88,7 @@
                 <h6 class="m-0 font-weight-bold text-danger">Sewa Kendaraan</h6>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <form action="{{ route('vehicle.rent.post') }}" class="col-sm-6 col-lg-6 col-md-4 mx-auto"
-                        method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="vehicle_id">Kendaraan</label>
-                            <select name="vehicle_id" id="vehicle_id" class="form-control select2" required>
-                                @foreach ($vehicles as $id => $vehicle)
-                                    <option value="{{ $id }}" {{ old('vehicle_id') == $id ? 'selected' : '' }}
-                                        @if ($loop->index == 0) selected disabled @endif>
-                                        {{ $vehicle }}</option>
-                                @endforeach
-                            </select>
-                            @error('vehicle_id')
-                                <div class="alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-danger float-right">Pinjam</button>
-                    </form>
-                </div>
+                @livewire('dropdown-vehicle')
             </div>
         </div>
 
@@ -183,13 +164,13 @@
             $("#example1").DataTable({
                 "order": [],
                 "responsive": true,
-                "lengthChange": true,
+                "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ['copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5', "colvis"
-                ]
+                // "buttons": ['copyHtml5',
+                //     'excelHtml5',
+                //     'csvHtml5',
+                //     'pdfHtml5', "colvis"
+                // ]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>

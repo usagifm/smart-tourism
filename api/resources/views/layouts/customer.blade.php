@@ -19,9 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-
     <!-- Custom styles for this Page-->
     @yield('custom_styles')
+    @livewireStyles
 
 </head>
 
@@ -150,9 +150,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
     <!-- Page level custom scripts -->
     @yield('custom_scripts')
+    @livewireScripts
 
 </body>
 
