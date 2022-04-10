@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vehicle;
 
 use App\Models\Rental;
+use App\Models\Operator;
 use GuzzleHttp\Client;
 use App\Models\Vehicle;
 use App\Models\RentArea;
@@ -74,7 +75,28 @@ class VehicleRentalController extends Controller
             ])
            ->isLocationOnEdge($request->query('lat'), $request->query('long'), $rentArea->tolerance);
            if($response == false ){
+
+            $tokens = Operator::whereNotNull("fcm_registration_id")->get()->pluck('fcm_registration_id')->toArray();
+
+            if ($tokens != null){
+                $data = [
+                    "registration_ids" => $tokens,
+                    "notification" => [
+                        "title" => "Perhatian ! Ada kendaraan yang keluar area !",
+                        "body" => "Kendaraan dengan serial number ".$vehicle->serial_number." sudah keluar area, mohon tindak lanjut !"],
+                    "data" => [
+                        "rental_id" => $checkIfOngoing->id,
+                        "vehicle_id" => $checkIfOngoing->vehicle_id,
+                    ]
+                ];
+    
+                $encodedData = json_encode($data);
+                $this->sendNotification($encodedData);
+            }
+
             $ongoing = 2;
+
+
            }
 
         };
