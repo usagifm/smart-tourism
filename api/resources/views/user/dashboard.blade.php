@@ -119,9 +119,9 @@
                                     <td>Rp. {{ number_format($rental->vehicle->fare, 2) }} / 30 <sub>menit</sub></td>
                                     <td>{{ $rental->total_time }} <sub>menit</sub></td>
                                     <td>Rp. {{ number_format($rental->price, 2) }}</td>
-                                    <td>{{ $rental->date_time_start ? $rental->date_time_start->format('h:i d-m-Y') : '-' }}
+                                    <td>{{ $rental->date_time_start ? $rental->date_time_start->format('H:i d-m-Y') : '-' }}
                                     </td>
-                                    <td>{{ $rental->date_time_end ? $rental->date_time_end->format('h:i d-m-Y') : '-' }}
+                                    <td>{{ $rental->date_time_end ? $rental->date_time_end->format('H:i d-m-Y') : '-' }}
                                     </td>
                                     <td>{{ ucfirst($rental->status) }}</td>
                                 </tr>

@@ -20,7 +20,7 @@ class VehicleController extends Controller
     {
         abort_if(Gate::denies('manage_vehicle'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::with('vehicleType')->get();
 
         return view('vehicles.index', compact('vehicles'));
     }

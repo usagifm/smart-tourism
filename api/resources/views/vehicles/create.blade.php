@@ -45,7 +45,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="fare">Fare</label>
+                        <label for="fare">Tarif Per-30 Menit</label>
                         <input type="number" class="form-control @error('fare') is-invalid @enderror" name="fare" id="fare"
                             value="{{ old('fare') }}" required>
                         @error('fare')

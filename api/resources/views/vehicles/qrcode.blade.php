@@ -16,7 +16,7 @@
 </head>
 
 <body style="width: 100%">
-    <div style="border: 2px solid black; margin: 0 20%">
+    <div style="border: 2px solid black; margin: 0 20%;padding-bottom:8%;">
         <div style="margin: 10% 8% 0 8%">
             <img src="{{ public_path('images/itera.png') }}" height="45" width="40" alt="">
             <img src="{{ public_path('images/tubaba.png') }}" height="45" width="110" style="margin: 0 5" alt="">
@@ -27,9 +27,13 @@
         <div style="margin: 0 20%">
             <img src="{{ public_path('vehicle/' . $vehicle->id . '.png') }}" height="250" width="250" alt="">
         </div>
-        <div style="display: flex;">
-            <h4 style="margin-left: 30%">{{ $vehicle->vehicleType->type }}</h4>
-            <h4 style="margin-left: 55%;">{{ $vehicle->serial_number }}</h4>
+        <div style="height: 12px; margin-top: -10%;">
+            <h4 style="float:left; margin-left: 30%; width:100px;">
+                {{ $vehicle->vehicleType->type }}
+            </h4>
+            <h4 style="float:right; margin-right: 30%;">
+                {{ $vehicle->serial_number }}
+            </h4>
         </div>
     </div>
 </body>

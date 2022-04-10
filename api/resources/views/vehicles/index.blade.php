@@ -29,9 +29,10 @@
                             <tr>
                                 <th style="width: 10px">No</th>
                                 <th>Serial Number</th>
-                                <th>Fare</th>
+                                <th>Type</th>
+                                <th>Tarif Per-30 Menit</th>
                                 <th>Description</th>
-                                <th>Aksi</th>
+                                <th style="width: 180px">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +40,8 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $vehicle->serial_number }}</td>
-                                    <td>{{ $vehicle->fare }}</td>
+                                    <td>{{ $vehicle->vehicleType->type }}</td>
+                                    <td>{{ number_format($vehicle->fare, 2) }}</td>
                                     <td>{{ $vehicle->description }}</td>
                                     <td>
                                         <a href="{{ route('vehicles.edit', $vehicle) }}"
